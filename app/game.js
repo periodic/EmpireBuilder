@@ -4,7 +4,7 @@ define(['angular', 'data/constants'], function (_) {
     this.Buildings = Buildings;
     this.Constants = Constants;
     this.cities = [new City("City 1")];
-    this.money = 100;
+    this.money = Constants.initialMoney;
     this.moneyPerSecond = 0;
 
     $interval(angular.bind(this, this.perTick), Constants.updateDelay);
