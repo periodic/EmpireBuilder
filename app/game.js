@@ -1,5 +1,4 @@
 define(['angular', 'data/constants'], function (_) {
-  console.log("Registering game service.");
   function Game($interval, Buildings, Upgrades, Constants) {
     this.Buildings = Buildings;
     this.Upgrades = Upgrades;
@@ -82,9 +81,7 @@ define(['angular', 'data/constants'], function (_) {
   }
 
   Game.prototype.upgradesAvailable = function () {
-    console.log("filtering", this.Upgrades);
     return Object.keys(this.Upgrades).filter(function (upgradeId) {
-      console.log("filtering", upgradeId);
       var upgrade = this.Upgrades[upgradeId];
       // if it has a max and we've reached it, it's not available.
       return !upgrade.max || upgrade.max > (this.upgradesPurchased_[upgrade.id] || 0);
@@ -107,18 +104,15 @@ define(['angular', 'data/constants'], function (_) {
     var upgrade = this.Upgrades[upgradeId];
     var cost = this.upgradeCost(upgradeId);
     if (! upgrade || (upgrade.max && upgrade.max <= alreadyPurchased)) {
-      console.log("Not purchasing", upgrade, this.upgradesPurchased_);
       return;
     }
 
     if (this.money < cost) {
-      console.log("Not enough money.", cost);
       return;
     }
 
     this.money = this.money - cost;
     this.upgradesPurchased_[upgradeId] = alreadyPurchased + 1;
-    console.log(upgradeId + ' purchased', this.upgradesPurchased_);
 
     upgrade.onPurchase(this);
   };
@@ -135,7 +129,7 @@ define(['angular', 'data/constants'], function (_) {
     Object.keys(this.buildings).forEach(function (buildingId) {
       total = total + this.buildings[buildingId];
     }, this);
-    return total;;
+    return total;
   };
 
   City.prototype.numBuildings = function (buildingId) {
@@ -149,6 +143,4 @@ define(['angular', 'data/constants'], function (_) {
 
   var m = angular.module('EB.Game', ['EB.Constants']);
   m.service('game', Game);
-
-  console.log("Game service registered.");
 });

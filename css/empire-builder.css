@@ -12,6 +12,7 @@
 }
 
 .menu {
+  float: left;
   display: flex;
   padding: 0;
 }
@@ -19,6 +20,7 @@
 .menu li {
   list-style: none;
   padding-right: 20px;
+  font-weight: bold;
 }
 
 table .name {
@@ -35,6 +37,14 @@ table .money-delta {
 .city-list {
   margin-bottom: 20px;
   margin-top: 20px;
+}
+
+table tbody tr.selected {
+  background-color: #d9edf7
+}
+
+table tbody tr:hover {
+  background-color: #d9edf7
 }
 
 /*

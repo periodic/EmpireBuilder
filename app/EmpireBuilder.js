@@ -6,7 +6,6 @@ define([
   'filters',
   'game',
   'controllers'], function (_) {
-    console.log("Creating EB module.");
   angular.module('EB', [
     'ui.router',
     'EB.Constants',
@@ -37,5 +36,4 @@ define([
         controller: 'UpgradesController',
       })
     });
-    console.log("EB module created.");
 });

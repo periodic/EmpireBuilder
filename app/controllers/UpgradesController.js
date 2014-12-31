@@ -11,7 +11,6 @@ define(['angular'], function () {
   };
 
   UpgradesController.prototype.purchase = function (upgradeId) {
-    console.log("purchasing ", upgradeId);
     this.game.purchaseUpgrade(upgradeId);
 
     this.upgradesAvailable = this.game.upgradesAvailable();
