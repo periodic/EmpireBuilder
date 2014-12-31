@@ -1,0 +1,28 @@
+<div class="achievements">
+  <table class="achievements table">
+    <thead>
+      <tr>
+        <th class="check"></th>
+        <th class="name">Achievement</th>
+        <th class="cost">Points</th>
+        <th class="description">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="achievement in achievementsController.game.achievementsAcquired">
+        <td class="check">&#x2714</td>
+        <td class="name">{{ achievement.name }}</td>
+        <td class="points">{{ achievement.points | number:0 }}</td>
+        <td class="description">{{ achievement.description }}</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr ng-repeat="achievement in achievementsController.game.achievementsAvailable">
+        <td class="check"></td>
+        <td class="name">{{ achievement.name }}</td>
+        <td class="points">{{ achievement.points | number:0 }}</td>
+        <td class="description">{{ achievement.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

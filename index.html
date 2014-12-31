@@ -11,12 +11,18 @@
           <ul class="menu">
             <li ng-click="gameController.onShowCities()">Cities</li>
             <li ng-click="gameController.onShowUpgrades()">Upgrades</li>
+            <li ng-click="gameController.onShowAchievements()">Achievements</li>
           </ul>
           <div class="resources">
-            Money: {{ gameController.game.money | roundDown | number: 0}}
-            <span class="income">
-              ({{ gameController.game.moneyPerSecond | number:1 }}/s)
-            </span>
+            <div class="money">
+              Money: {{ gameController.game.money | roundDown | number: 0}}
+              <span class="income">
+                ({{ gameController.game.moneyPerSecond | number:1 }}/s)
+              </span>
+            </div>
+            <div class="score">
+              Score: {{ gameController.game.achievementScore | number: 0 }}
+            </div>
           </div>
         </div>
 

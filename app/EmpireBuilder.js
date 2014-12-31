@@ -18,14 +18,14 @@ define([
       $urlRouterProvider.otherwise("/city");
 
       $stateProvider
-      .state("city", {
-        url: "/city",
-        templateUrl: "app/views/city.html",
+      .state("cities", {
+        url: "/cities",
+        templateUrl: "app/views/cities.html",
         controller: function ($scope, game) {
           $scope.game = game;
         },
       })
-      .state("city.detail", {
+      .state("cities.detail", {
         url: "/detail/:cityId",
         templateUrl: "app/views/city-detail.html",
         controller: 'CityController',
@@ -34,6 +34,11 @@ define([
         url: "/upgrades",
         templateUrl: "app/views/upgrades.html",
         controller: 'UpgradesController',
+      })
+      .state("achievements", {
+        url: "/achievements",
+        templateUrl: "app/views/achievements.html",
+        controller: 'AchievementsController',
       })
     });
 });

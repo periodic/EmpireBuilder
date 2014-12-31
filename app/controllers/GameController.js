@@ -11,17 +11,21 @@ define(['angular'], function () {
   };
 
   GameController.prototype.onShowCities = function (event) {
-    this.$state.go('city');
+    this.$state.go('cities');
   };
 
   GameController.prototype.onShowUpgrades = function (event) {
     this.$state.go('upgrades');
   };
 
+  GameController.prototype.onShowAchievements = function (event) {
+    this.$state.go('achievements');
+  };
+
   GameController.prototype.onSelectCity = function (event, cityId) {
     event.stopPropagation();
 
-    this.$state.go('city.detail', {cityId: cityId});
+    this.$state.go('cities.detail', {cityId: cityId});
   };
 
   GameController.prototype.onPurchaseCity = function (event) {
@@ -29,7 +33,7 @@ define(['angular'], function () {
 
     var cityId = this.game.purchaseCity();
 
-    this.$state.go('city.detail', {cityId: cityId});
+    this.$state.go('cities.detail', {cityId: cityId});
   };
 
   var m = angular.module('EB.Controllers.GameController', []);

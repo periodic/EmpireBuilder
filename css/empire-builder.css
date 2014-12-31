@@ -1,14 +1,18 @@
 #status-bar {
   border-bottom: 1px solid #ddd;
-  display:flex;
+  display: flex;
   align-items: flex-end;
-  align-content: space-between;
+  justify-content: space-between;
+}
+
+ul.menu {
+  padding-left: 0;
+  margin-bottom: 0;
 }
 
 .menu {
+  flex-grow: 1;
   display: flex;
-  padding: 0;
-  margin: 0;
 }
 
 .menu li {
@@ -17,6 +21,12 @@
   font-weight: bold;
   font-size: 140%;
   cursor: pointer;
+}
+
+.resources {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
 }
 
 #side-panel {
@@ -60,6 +70,11 @@ table.city-list tr,
 table.upgrades-available tr,
 table.building-list tr {
   cursor: pointer;
+}
+
+.upgrade-header {
+  font-weight: bold;
+  font-size: 140%;
 }
 
 /*

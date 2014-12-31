@@ -1,9 +1,13 @@
 define(['angular', 'data/constants'], function (_) {
-  function Game($interval, Buildings, CityNames, Constants, Upgrades) {
+  function Game($interval, Achievements, Buildings, CityNames, Constants, Upgrades) {
     this.Buildings = Buildings;
     this.CityNames = CityNames;
     this.Constants = Constants;
     this.Upgrades = Upgrades;
+
+    this.achievementsAvailable = Achievements;
+    this.achievementsAcquired = [];
+    this.achievementScore = 0;
 
     this.cities = [new City(this.generateCityName())];
 
@@ -29,6 +33,8 @@ define(['angular', 'data/constants'], function (_) {
       city.addBuilding(buildingId);
       this.money = this.money - cost;
     }
+
+    this.checkAchievements();
   };
 
   Game.prototype.purchaseCity = function () {
@@ -38,6 +44,8 @@ define(['angular', 'data/constants'], function (_) {
       this.cities.push(new City(this.generateCityName()));
       this.money = this.money - cost;
     }
+
+    this.checkAchievements();
 
     return this.cities.length - 1;
   };
@@ -66,6 +74,7 @@ define(['angular', 'data/constants'], function (_) {
 
     this.moneyPerSecond = moneyDelta;
     this.money = this.money + moneyDelta * this.Constants.updateDelay / 1000;
+    this.checkAchievements();
   };
 
   Game.prototype.trueCost = function (base, count, growthFactor) {
@@ -127,6 +136,23 @@ define(['angular', 'data/constants'], function (_) {
     this.upgradesPurchased_[upgradeId] = alreadyPurchased + 1;
 
     upgrade.onPurchase(this);
+
+    this.checkAchievements();
+  };
+
+  Game.prototype.checkAchievements = function () {
+    var available = [];
+    this.achievementsAvailable.forEach(function (achievement) {
+      if (achievement.condition(this)) {
+        this.achievementsAcquired.push(achievement);
+        this.achievementScore = this.achievementScore + achievement.points;
+        console.log("Achieved:", achievement);
+      } else {
+        available.push(achievement);
+      }
+    }, this);
+
+    this.achievementsAvailable = available;
   };
 
   function City(name) {
