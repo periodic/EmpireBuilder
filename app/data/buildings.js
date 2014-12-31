@@ -5,8 +5,8 @@ define(['angular'], function (_) {
     farm: {
       id: "farm",
       name: "Farm",
-      description: "A farm.",
-      cost: 100,
+      description: "Has goats, chickens, and a variety of crops.",
+      cost: 5,
       baseMoneyPerSecond: 1,
       moneyPerSecond: function (count, city, game) {
         return count * this.baseMoneyPerSecond;
@@ -15,10 +15,41 @@ define(['angular'], function (_) {
     workshop: {
       id: "workshop",
       name: "Workshop",
-      description: "A workshop.",
-      cost: 1000,
+      description: "A shop that has tools and machinery where things are made and fixed.",
+      cost: 30,
+      baseMoneyPerSecond: 6,
       moneyPerSecond: function (count, city, game) {
-        return count * 10;
+        return count * this.baseMoneyPerSecond;
+      },
+    },
+    market: {
+      id: "market",
+      name: "Market",
+      description: "A place for puchase and sale of provisions, livestock and other goods.",
+      cost: 180,
+      baseMoneyPerSecond: 36,
+      moneyPerSecond: function (count, city, game) {
+        return count * this.baseMoneyPerSecond;
+      },
+    },
+    school: {
+      id: "school",
+      name: "School",
+      description: "An instituion of learning.",
+      cost: 1080,
+      baseMoneyPerSecond: 216,
+      moneyPerSecond: function (count, city, game) {
+        return count * this.baseMoneyPerSecond;
+      },
+    },
+    bank: {
+      id: "bank",
+      name: "Bank",
+      description: "Show me the money.",
+      cost: 6480,
+      baseMoneyPerSecond: 1296,
+      moneyPerSecond: function (count, city, game) {
+        return count * this.baseMoneyPerSecond;
       },
     },
   });
