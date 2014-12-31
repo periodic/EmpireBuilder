@@ -1,5 +1,22 @@
 #status-bar {
   border-bottom: 1px solid #ddd;
+  display:flex;
+  align-items: flex-end;
+  align-content: space-between;
+}
+
+.menu {
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  list-style: none;
+  padding-right: 20px;
+  font-weight: bold;
+  font-size: 140%;
+  cursor: pointer;
 }
 
 #side-panel {
@@ -11,19 +28,6 @@
   margin-left: -1px;
 }
 
-.menu {
-  float: left;
-  display: flex;
-  padding: 0;
-}
-
-.menu li {
-  list-style: none;
-  padding-right: 20px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
 .city-list {
   margin-bottom: 20px;
   margin-top: 20px;
@@ -31,6 +35,10 @@
 
 table .name {
   width: 150px;
+}
+
+td.name {
+  font-size: 120%;
 }
 
 table .cost,
