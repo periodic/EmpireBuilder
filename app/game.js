@@ -131,7 +131,11 @@ define(['angular', 'data/constants'], function (_) {
   };
 
   City.prototype.totalBuildings = function () {
-    return Object.keys(this.buildings).length;
+    var total = 0;
+    Object.keys(this.buildings).forEach(function (buildingId) {
+      total = total + this.buildings[buildingId];
+    }, this);
+    return total;;
   };
 
   City.prototype.numBuildings = function (buildingId) {
