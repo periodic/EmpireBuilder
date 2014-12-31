@@ -1,5 +1,6 @@
 <div class="city-detail">
   <h3 class="city-name">{{ cityController.city.name }}</h3>
+  <p class="city-distance-penalty">Distance Penalty: {{ cityController.city.getPenalty() * 100 | number:0 }}%</p>
 
   <table class='building-list table'>
     <thead>

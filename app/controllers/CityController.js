@@ -9,14 +9,14 @@ define(['angular'], function () {
     this.city = game.getCity(this.cityId);
     if (!this.city) {
       console.log("City is not found.", this);
-      $state.go('city');
+      $state.go('cities');
     }
 
     $scope.$on('purchaseBuilding', angular.bind(this, this.onPurchase));
   }
 
   CityController.prototype.getBuildingCost = function(buildingId) {
-    return this.game.buildingCost(buildingId, this.getBuildingCount(buildingId));
+    return this.game.buildingCost(buildingId, this.cityId);
   }
 
   CityController.prototype.getBuildingCount = function(buildingId) {

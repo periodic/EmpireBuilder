@@ -13,8 +13,9 @@ define(['angular', 'data/achievements', 'data/buildings', 'data/cities', 'data/u
     initialMoney: 1000,
     growthFactors: {
       building: 1.2,
-      city: 2.0,
+      cityCost: 2.0,
       upgrade: 1.5,
+      cityBuildings: 1.2,
     },
   });
 

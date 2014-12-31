@@ -9,7 +9,7 @@ define(['angular', 'data/constants'], function (_) {
     this.achievementsAcquired = [];
     this.achievementScore = 0;
 
-    this.cities = [new City(this.generateCityName())];
+    this.cities = [];
 
     this.money = Constants.initialMoney;
     this.moneyPerSecond = 0;
@@ -19,6 +19,8 @@ define(['angular', 'data/constants'], function (_) {
     this.upgradesPurchased_ = {};
 
     $interval(angular.bind(this, this.perTick), Constants.updateDelay);
+
+    this.buildCity();
   };
 
   Game.prototype.getCity = function (cityId) {
@@ -27,7 +29,7 @@ define(['angular', 'data/constants'], function (_) {
 
   Game.prototype.purchaseBuilding = function (cityId, buildingId) {
     var city = this.cities[cityId];
-    var cost = this.buildingCost(buildingId, city.numBuildings(buildingId));
+    var cost = this.buildingCost(buildingId, cityId);
 
     if (this.money >= cost) {
       city.addBuilding(buildingId);
@@ -41,13 +43,22 @@ define(['angular', 'data/constants'], function (_) {
     var cost = this.cityCost();
 
     if (this.money >= cost) {
-      this.cities.push(new City(this.generateCityName()));
       this.money = this.money - cost;
+      this.buildCity();
+      return this.cities.length - 1;
     }
 
-    this.checkAchievements();
+    return -1;
+  };
 
-    return this.cities.length - 1;
+  Game.prototype.buildCity = function () {
+    var city = new City(this.generateCityName());
+    city.buildingPenalty = Math.pow(this.Constants.growthFactors.cityBuildings, this.cities.length);
+    this.cities.push(city);
+
+    console.log("Built city: ", city);
+
+    this.checkAchievements();
   };
 
   Game.prototype.generateCityName = function () {
@@ -81,16 +92,18 @@ define(['angular', 'data/constants'], function (_) {
     return base * Math.pow(growthFactor, count);
   };
 
-  Game.prototype.buildingCost = function (buildingId, count) {
+  Game.prototype.buildingCost = function (buildingId, cityId) {
     var building = this.Buildings[buildingId];
-    return this.trueCost(building.cost, count, this.Constants.growthFactors.building);
+    var city = this.cities[cityId];
+    return city.buildingPenalty *
+        this.trueCost(building.cost, city.numBuildings(buildingId), this.Constants.growthFactors.building);
   };
 
   Game.prototype.cityCost = function () {
     return this.trueCost(
         this.Constants.baseCityCost,
         this.cities.length - 1,
-        this.Constants.growthFactors.city);
+        this.Constants.growthFactors.cityCost);
   };
 
   Game.prototype.upgradeCost = function (upgradeId) {
@@ -159,6 +172,7 @@ define(['angular', 'data/constants'], function (_) {
     this.name = name;
     this.population = 1;
     this.moneyPerTurn = 0;
+    this.buildingPenalty = 1.0;
     this.buildings = {};
   };
 
@@ -177,6 +191,10 @@ define(['angular', 'data/constants'], function (_) {
   City.prototype.addBuilding = function (buildingId) {
     var count = this.buildings[buildingId] || 0;
     this.buildings[buildingId] = count + 1;
+  };
+
+  City.prototype.getPenalty = function () {
+    return this.buildingPenalty - 1;
   };
 
   var m = angular.module('EB.Game', ['EB.Constants']);
