@@ -11,7 +11,7 @@ define(['angular', 'data/achievements', 'data/buildings', 'data/cities', 'data/u
     updateDelay: 100, // ms
     saveDelay: 1000, // ms
     baseCityCost: 10,
-    initialMoney: 1000,
+    initialMoney: 50,
     growthFactors: {
       building: 1.2,
       cityCost: 2.0,
