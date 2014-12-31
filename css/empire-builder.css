@@ -11,11 +11,33 @@
   margin-left: -1px;
 }
 
+.menu {
+  display: flex;
+  padding: 0;
+}
+
+.menu li {
+  list-style: none;
+  padding-right: 20px;
+}
+
+table .name {
+  width: 150px;
+}
+
+table .cost,
+table .count,
+table .purchased,
+table .money-delta, {
+  width: 100px;
+}
+
 .city-list {
   margin-bottom: 20px;
   margin-top: 20px;
 }
 
+/*
 .city, .city-list-header,
 .building, .building-list-header {
   display: flex;
@@ -45,4 +67,5 @@
 .building-list-header .cost {
   width: 100px;
 }
+*/
 

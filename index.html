@@ -8,8 +8,16 @@
   <body>
     <div ng-controller="GameController" class="container">
         <div id="status-bar" class="row">
-          Money: {{ gameController.game.money | roundDown }}
-          ({{gameController.game.moneyPerSecond | number:0 }}/s)
+          <ul class="menu">
+            <li ng-click="gameController.onShowCities()">Cities</li>
+            <li ng-click="gameController.onShowUpgrades()">Upgrades</li>
+          </ul>
+          <div class="resources">
+            Money: {{ gameController.game.money | roundDown }}
+            <span class="income">
+              ({{gameController.game.moneyPerSecond | number:1 }}/s)
+            </span>
+          </div>
         </div>
 
         <div class="row">

@@ -10,6 +10,14 @@ define(['angular'], function () {
     $scope.$on('purchaseCity', angular.bind(this, this.onPurchaseCity));
   };
 
+  GameController.prototype.onShowCities = function (event) {
+    this.$state.go('city');
+  };
+
+  GameController.prototype.onShowUpgrades = function (event) {
+    this.$state.go('upgrades');
+  };
+
   GameController.prototype.onSelectCity = function (event, cityId) {
     event.stopPropagation();
 

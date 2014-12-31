@@ -1,7 +1,8 @@
-define(['angular', 'data/buildings'], function (_) {
+define(['angular', 'data/buildings', 'data/upgrades'], function (_) {
 
   var m = angular.module('EB.Constants', [
     'EB.Buildings',
+    'EB.Upgrades',
   ]);
 
   m.constant('Constants', {
@@ -11,6 +12,7 @@ define(['angular', 'data/buildings'], function (_) {
     growthFactors: {
       building: 1.2,
       city: 2.0,
+      upgrade: 1.5,
     },
   });
 

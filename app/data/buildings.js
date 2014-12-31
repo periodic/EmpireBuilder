@@ -7,8 +7,9 @@ define(['angular'], function (_) {
       name: "Farm",
       description: "A farm.",
       cost: 100,
+      baseMoneyPerSecond: 1,
       moneyPerSecond: function (count, city, game) {
-        return count * 1;
+        return count * this.baseMoneyPerSecond;
       },
     },
     workshop: {

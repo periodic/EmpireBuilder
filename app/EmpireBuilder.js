@@ -31,6 +31,11 @@ define([
         templateUrl: "app/views/city-detail.html",
         controller: 'CityController',
       })
+      .state("upgrades", {
+        url: "/upgrades",
+        templateUrl: "app/views/upgrades.html",
+        controller: 'UpgradesController',
+      })
     });
     console.log("EB module created.");
 });

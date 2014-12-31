@@ -1,10 +1,16 @@
-<div class='city-list'>
-  <div class="city-list-header">
-    <p class="name">City</p>
-    <p class="money-delta">Money</p>
-    <p class="buildings">Buildings</p>
-  </div>
-  <div ng-repeat="city in cities">
-    <city-summary city="city" ng-click="$emit('select-city', $index)"></city-summary>
-  </div>
-</div>
+<table class='city-list'>
+  <thead>
+    <tr class="city-list-header">
+      <th class="name">City</th>
+      <th class="money-delta">Money</th>
+      <th class="buildings">Buildings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="city in cities" ng-click="$emit('select-city', $index)">
+      <td class="name">{{ city.name }}</td>
+      <td class="money-delta">{{ city.moneyPerTurn | number }}/s</td>
+      <td class="buildings">{{ city.totalBuildings() }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,11 +1,14 @@
 define(['angular', 'data/constants'], function (_) {
   console.log("Registering game service.");
-  function Game($interval, Buildings, Constants) {
+  function Game($interval, Buildings, Upgrades, Constants) {
     this.Buildings = Buildings;
+    this.Upgrades = Upgrades;
     this.Constants = Constants;
     this.cities = [new City("City 1")];
     this.money = Constants.initialMoney;
     this.moneyPerSecond = 0;
+    this.upgradesPurchased_ = {};
+    this.goldMultiplier = 1.0;
 
     $interval(angular.bind(this, this.perTick), Constants.updateDelay);
   };
@@ -44,8 +47,8 @@ define(['angular', 'data/constants'], function (_) {
         var building = this.Buildings[buildingId];
         var count = city.buildings[buildingId];
         var delta = building.moneyPerSecond(count, city, this);
-        moneyDelta = moneyDelta + delta
-        cityMoneyDelta = cityMoneyDelta + delta;
+        moneyDelta = moneyDelta + delta * this.goldMultiplier;
+        cityMoneyDelta = cityMoneyDelta + delta * this.goldMultiplier;
       }));
       city.moneyPerTurn = cityMoneyDelta;
     }));
@@ -68,6 +71,56 @@ define(['angular', 'data/constants'], function (_) {
         this.Constants.baseCityCost,
         this.cities.length - 1,
         this.Constants.growthFactors.city);
+  };
+
+  Game.prototype.upgradeCost = function (upgradeId) {
+    var upgrade = this.Upgrades[upgradeId];
+    return this.trueCost(
+        upgrade.cost,
+        (this.upgradesPurchased_[upgradeId] || 0),
+        this.Constants.growthFactors.upgrade);
+  }
+
+  Game.prototype.upgradesAvailable = function () {
+    console.log("filtering", this.Upgrades);
+    return Object.keys(this.Upgrades).filter(function (upgradeId) {
+      console.log("filtering", upgradeId);
+      var upgrade = this.Upgrades[upgradeId];
+      // if it has a max and we've reached it, it's not available.
+      return !upgrade.max || upgrade.max > (this.upgradesPurchased_[upgrade.id] || 0);
+    }, this).map(function (upgradeId) { 
+      return this.Upgrades[upgradeId];
+    }, this);
+  };
+
+  Game.prototype.upgradesPurchased = function () {
+    return Object.keys(this.upgradesPurchased_).map(function (upgradeId) {
+      return {
+          upgrade: this.Upgrades[upgradeId],
+          purchased: this.upgradesPurchased_[upgradeId],
+      };
+    }, this);
+  };
+
+  Game.prototype.purchaseUpgrade = function (upgradeId) {
+    var alreadyPurchased = this.upgradesPurchased_[upgradeId] || 0;
+    var upgrade = this.Upgrades[upgradeId];
+    var cost = this.upgradeCost(upgradeId);
+    if (! upgrade || (upgrade.max && upgrade.max <= alreadyPurchased)) {
+      console.log("Not purchasing", upgrade, this.upgradesPurchased_);
+      return;
+    }
+
+    if (this.money < cost) {
+      console.log("Not enough money.", cost);
+      return;
+    }
+
+    this.money = this.money - cost;
+    this.upgradesPurchased_[upgradeId] = alreadyPurchased + 1;
+    console.log(upgradeId + ' purchased', this.upgradesPurchased_);
+
+    upgrade.onPurchase(this);
   };
 
   function City(name) {

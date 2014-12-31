@@ -1,8 +1,9 @@
 define(['angular'], function () {
 
-  function CityController($scope, $state, $stateParams, game) {
+  function CityController($scope, $state, $stateParams, game, Buildings) {
     console.log("CityControler instantiated: ", $stateParams, game);
     $scope.cityController = this;
+    $scope.Buildings = Buildings;
 
     this.game = game;
     this.cityId = $stateParams['cityId'];
@@ -15,8 +16,17 @@ define(['angular'], function () {
     $scope.$on('purchaseBuilding', angular.bind(this, this.onPurchase));
   }
 
-  CityController.prototype.onPurchase = function (event, buildingId) {
-    event.stopPropagation();
+  CityController.prototype.getBuildingCost = function(buildingId) {
+    console.log("Getting cost of ", buildingId);
+    return this.game.buildingCost(buildingId, this.getBuildingCount(buildingId));
+  }
+
+  CityController.prototype.getBuildingCount = function(buildingId) {
+    console.log("Getting count of ", buildingId);
+    return this.city.buildings[buildingId] || 0;
+  }
+
+  CityController.prototype.purchase = function (buildingId) {
     this.game.purchaseBuilding(this.cityId, buildingId);
   };
 

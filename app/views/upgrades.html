@@ -1,0 +1,41 @@
+<div class="upgrades">
+  <div class="available">
+    <p class="upgrade-header">Available</p>
+    <table class="upgrades-available">
+      <thead>
+        <tr>
+          <th class="name">Upgrade</th>
+          <th class="cost">Cost</th>
+          <th class="description">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="upgrade in upgradesController.upgradesAvailable"
+           ng-click="upgradesController.purchase(upgrade.id)">
+          <td class="name">{{ upgrade.name }}</td>
+          <td class="cost">{{ upgradesController.game.upgradeCost(upgrade.id) }}</td>
+          <td class="description">{{ upgrade.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="purchased">
+    <p class="upgrade-header">Purchased</p>
+    <table class="upgrades-purchased">
+      <thead>
+        <tr>
+          <th class="name">Upgrade</th>
+          <th class="cost">Purchased</th>
+          <th class="description">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="upgradeInfo in upgradesController.upgradesPurchased">
+          <td class="name">{{ upgradeInfo.upgrade.name }}</td>
+          <td class="purchased">{{ upgradeInfo.purchased }}</td>
+          <td class="description">{{ upgradeInfo.upgrade.description }}</td>
+        </tr>
+      </body>
+    </table>
+  </div>
+</div>

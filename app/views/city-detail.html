@@ -1,5 +1,22 @@
 <div class="city-detail">
   <h3 class="city-name">{{ cityController.city.name }}</h3>
 
-  <buildings counts="cityController.city.buildings"></buildings>
+  <table class='building-list'>
+    <thead>
+      <tr class="building-list-header">
+        <th class="name">Building</th>
+        <th class="count">Built</th>
+        <th class="cost">Cost</th>
+        <th class="description">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="building in Buildings" ng-click="cityController.purchase(building.id)">
+        <td class="name">{{ building.name }}</td>
+        <td class="count">{{ cityController.getBuildingCount(building.id) }}</td>
+        <td class="cost">{{ cityController.getBuildingCost(building.id) | number:0 }}</td>
+        <td class="description">{{ building.description }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
