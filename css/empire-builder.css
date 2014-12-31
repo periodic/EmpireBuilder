@@ -28,7 +28,7 @@ table .name {
 table .cost,
 table .count,
 table .purchased,
-table .money-delta, {
+table .money-delta {
   width: 100px;
 }
 

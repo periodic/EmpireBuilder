@@ -17,12 +17,10 @@ define(['angular'], function () {
   }
 
   CityController.prototype.getBuildingCost = function(buildingId) {
-    console.log("Getting cost of ", buildingId);
     return this.game.buildingCost(buildingId, this.getBuildingCount(buildingId));
   }
 
   CityController.prototype.getBuildingCount = function(buildingId) {
-    console.log("Getting count of ", buildingId);
     return this.city.buildings[buildingId] || 0;
   }
 

@@ -1,6 +1,21 @@
-<div ng-controller="CityController" class="row">
+<div class="row">
   <div id="side-panel" class="col-md-4">
-    <city-list cities="game.cities"></city-list>
+    <table class='city-list table-hover'>
+      <thead>
+        <tr class="city-list-header">
+          <th class="name">City</th>
+          <th class="money-delta">Money</th>
+          <th class="buildings">Buildings</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="city in gameController.game.cities" ng-click="$emit('select-city', $index)">
+          <td class="name">{{ city.name }}</td>
+          <td class="money-delta">{{ city.moneyPerTurn | number }}/s</td>
+          <td class="buildings">{{ city.totalBuildings() }}</td>
+        </tr>
+      </tbody>
+    </table>
     <a ng-click="$emit('purchaseCity')" class="btn btn-primary">Buy City ({{game.cityCost()}})</a>
   </div>
   <div id="main-panel" class="col-md-8">
