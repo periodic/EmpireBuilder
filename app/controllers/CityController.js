@@ -6,9 +6,13 @@ define(['angular'], function () {
 
     this.game = game;
     this.cityId = $stateParams['cityId'];
-    this.city = game.cities[this.cityId];
+    this.city = game.getCity(this.cityId);
+    if (!this.city) {
+      console.log("City is not found.", this);
+      $state.go('city');
+    }
 
-    $scope.$on('purchase', angular.bind(this, this.onPurchase));
+    $scope.$on('purchaseBuilding', angular.bind(this, this.onPurchase));
   }
 
   CityController.prototype.onPurchase = function (event, buildingId) {

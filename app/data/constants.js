@@ -5,7 +5,8 @@ define(['angular', 'data/buildings'], function (_) {
   ]);
 
   m.constant('Constants', {
-    updateDelay: 1000, // ms
+    updateDelay: 100, // ms
+    baseCityCost: 10,
     growthFactors: {
       building: 1.2,
       city: 2.0,

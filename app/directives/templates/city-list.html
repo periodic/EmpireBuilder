@@ -1,6 +1,9 @@
 <div class='city-list'>
-  <h2>City List</h2>
-
+  <div class="city-list-header">
+    <p class="name">City</p>
+    <p class="money-delta">Money</p>
+    <p class="buildings">Buildings</p>
+  </div>
   <div ng-repeat="city in cities">
     <city-summary city="city" ng-click="$emit('select-city', $index)"></city-summary>
   </div>

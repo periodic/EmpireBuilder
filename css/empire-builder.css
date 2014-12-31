@@ -1,0 +1,48 @@
+#status-bar {
+  border-bottom: 1px solid #ddd;
+}
+
+#side-panel {
+  border-right: 1px solid #ddd;
+}
+
+#main-panel {
+  border-left: 1px solid #ddd;
+  margin-left: -1px;
+}
+
+.city-list {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.city, .city-list-header,
+.building, .building-list-header {
+  display: flex;
+}
+
+.city-list-header,
+.building-list-header {
+  font-weight: bold;
+}
+
+.city .name, .building .name {
+  font-size: 120%;
+}
+
+.city .name, .city-list-header .name,
+.building .name, .building-list-header .name {
+  width: 150px;
+}
+
+.city .money-delta,
+.city .buildings,
+.city-list-header .money-delta,
+.city-list-header .buildings,
+.building .count,
+.building .cost,
+.building-list-header .count,
+.building-list-header .cost {
+  width: 100px;
+}
+

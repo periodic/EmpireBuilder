@@ -3,6 +3,7 @@ define([
   'uirouter',
   'data/constants',
   'directives',
+  'filters',
   'game',
   'controllers'], function (_) {
     console.log("Creating EB module.");
@@ -11,6 +12,7 @@ define([
     'EB.Constants',
     'EB.Controllers',
     'EB.Directives',
+    'EB.Filters',
     'EB.Game',
     ])
     .config(function($stateProvider, $urlRouterProvider) {
@@ -20,6 +22,9 @@ define([
       .state("city", {
         url: "/city",
         templateUrl: "app/views/city.html",
+        controller: function ($scope, game) {
+          $scope.game = game;
+        },
       })
       .state("city.detail", {
         url: "/detail/:cityId",

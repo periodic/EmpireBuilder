@@ -6,18 +6,18 @@ define(['angular'], function (_) {
       id: "farm",
       name: "Farm",
       description: "A farm.",
-      cost: 10,
+      cost: 100,
       moneyPerSecond: function (count, city, game) {
-        return count * 0.1;
+        return count * 1;
       },
     },
     workshop: {
       id: "workshop",
       name: "Workshop",
       description: "A workshop.",
-      cost: 100,
+      cost: 1000,
       moneyPerSecond: function (count, city, game) {
-        return count * 1.0;
+        return count * 10;
       },
     },
   });

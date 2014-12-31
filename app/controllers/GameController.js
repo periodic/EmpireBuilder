@@ -7,13 +7,22 @@ define(['angular'], function () {
     this.game = game;
 
     $scope.$on('select-city', angular.bind(this, this.onSelectCity));
-  }
+    $scope.$on('purchaseCity', angular.bind(this, this.onPurchaseCity));
+  };
 
   GameController.prototype.onSelectCity = function (event, cityId) {
     event.stopPropagation();
 
     this.$state.go('city.detail', {cityId: cityId});
-  }
+  };
+
+  GameController.prototype.onPurchaseCity = function (event) {
+    event.stopPropagation();
+
+    var cityId = this.game.purchaseCity();
+
+    this.$state.go('city.detail', {cityId: cityId});
+  };
 
   var m = angular.module('EB.Controllers.GameController', []);
 

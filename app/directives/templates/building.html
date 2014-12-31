@@ -1,5 +1,6 @@
-<div class="building" ng-click="$emit('purchase', building.id)">
-  <h3>{{ building.name }} - {{ count }}</h3>
-
-  {{ building.description }}
+<div class="building" ng-click="$emit('purchaseBuilding', building.id)">
+  <p class="name">{{ building.name }}</p>
+  <p class="count">{{ count }}</p>
+  <p class="cost">{{ game.buildingCost(building.id, count) | number:0 }}</p>
+  <p class="description">{{ building.description }}</p>
 </div>

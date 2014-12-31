@@ -2,14 +2,19 @@
   <head>
     <title>Empire Builder</title>
     <script data-main="app/config.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/empire-builder.css" />
   </head>
   <body>
-    <div ng-controller="GameController">
-        <div id="status-bar">
-          Money : {{ gameController.game.money | number:0}}
+    <div ng-controller="GameController" class="container">
+        <div id="status-bar" class="row">
+          Money: {{ gameController.game.money | roundDown }}
+          ({{gameController.game.moneyPerSecond | number:0 }}/s)
         </div>
 
-        <ui-view></ui-view>
+        <div class="row">
+          <ui-view></ui-view>
+        </div>
     </div>
   </body>
 </html>

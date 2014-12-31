@@ -2,9 +2,10 @@ define(['angular', 'data/constants'], function (_) {
   var m = angular.module('EB.Directives.Buildings', [
     'EB.Constants',
     'EB.Controllers',
+    'EB.Game',
   ]);
 
-  m.directive('building', function () {
+  m.directive('building', function (game) {
     return {
       restrict: 'E',
       scope: {
@@ -12,6 +13,9 @@ define(['angular', 'data/constants'], function (_) {
         count: '=',
       },
       templateUrl: 'app/directives/templates/building.html',
+      link: function (scope, element, attrs) {
+        scope.game = game;
+      },
     };
   });
 

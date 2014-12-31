@@ -1,8 +1,9 @@
-<div ng-controller="CityController">
-  <div class="side-panel">
+<div ng-controller="CityController" class="row">
+  <div id="side-panel" class="col-md-4">
     <city-list cities="game.cities"></city-list>
+    <a ng-click="$emit('purchaseCity')" class="btn btn-primary">Buy City ({{game.cityCost()}})</a>
   </div>
-  <div class="main-panel">
+  <div id="main-panel" class="col-md-8">
     <ui-view></ui-view>
   </div>
 </div>
