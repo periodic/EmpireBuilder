@@ -13,7 +13,7 @@
             <li ng-click="gameController.onShowUpgrades()">Upgrades</li>
           </ul>
           <div class="resources">
-            Money: {{ gameController.game.money | roundDown }}
+            Money: {{ gameController.game.money | roundDown | number: 0}}
             <span class="income">
               ({{gameController.game.moneyPerSecond | number:1 }}/s)
             </span>

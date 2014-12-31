@@ -13,8 +13,8 @@
     <tbody>
       <tr ng-repeat="building in Buildings" ng-click="cityController.purchase(building.id)">
         <td class="name">{{ building.name }}</td>
-        <td class="count">{{ cityController.getBuildingCount(building.id) }}</td>
-        <td class="cost">{{ cityController.getBuildingCost(building.id) | number:0 }}</td>
+        <td class="count">{{ cityController.getBuildingCount(building.id) | number:0 }}</td>
+        <td class="cost">{{ cityController.getBuildingCost(building.id) | roundUp | number:0 }}</td>
         <td class="description">{{ building.description }}</td>
         <td class="actions"><a class="btn btn-primary">Buy</a></td>
       </tr>

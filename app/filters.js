@@ -1,5 +1,5 @@
-define(['angular', 'filters/cost', 'filters/roundDown'], function () {
+define(['angular', 'filters/cost', 'filters/rounding'], function () {
   var m = angular.module('EB.Filters', [
-    'EB.Filters.roundDown',
+    'EB.Filters.Rounding',
   ]);
 });
