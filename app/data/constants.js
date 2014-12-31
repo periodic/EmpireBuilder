@@ -1,7 +1,8 @@
-define(['angular', 'data/buildings', 'data/upgrades'], function (_) {
+define(['angular', 'data/buildings', 'data/cities', 'data/upgrades'], function (_) {
 
   var m = angular.module('EB.Constants', [
     'EB.Buildings',
+    'EB.CityNames',
     'EB.Upgrades',
   ]);
 

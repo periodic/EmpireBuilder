@@ -1,7 +1,6 @@
 define(['angular'], function () {
 
   function CityController($scope, $state, $stateParams, game, Buildings) {
-    console.log("CityControler instantiated: ", $stateParams, game);
     $scope.cityController = this;
     $scope.Buildings = Buildings;
 

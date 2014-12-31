@@ -1,13 +1,18 @@
 define(['angular', 'data/constants'], function (_) {
-  function Game($interval, Buildings, Upgrades, Constants) {
+  function Game($interval, Buildings, CityNames, Constants, Upgrades) {
     this.Buildings = Buildings;
-    this.Upgrades = Upgrades;
+    this.CityNames = CityNames;
     this.Constants = Constants;
-    this.cities = [new City("City 1")];
+    this.Upgrades = Upgrades;
+
+    this.cities = [new City(this.generateCityName())];
+
     this.money = Constants.initialMoney;
     this.moneyPerSecond = 0;
-    this.upgradesPurchased_ = {};
     this.goldMultiplier = 1.0;
+
+    // Private
+    this.upgradesPurchased_ = {};
 
     $interval(angular.bind(this, this.perTick), Constants.updateDelay);
   };
@@ -30,11 +35,18 @@ define(['angular', 'data/constants'], function (_) {
     var cost = this.cityCost();
 
     if (this.money >= cost) {
-      this.cities.push(new City("New City"));
+      this.cities.push(new City(this.generateCityName()));
       this.money = this.money - cost;
     }
 
     return this.cities.length - 1;
+  };
+
+  Game.prototype.generateCityName = function () {
+    var index = Math.floor(Math.random() * this.CityNames.length);
+    var name = this.CityNames[index].name;
+    this.CityNames.slice(index, 1);
+    return name;
   };
 
   Game.prototype.perTick = function () {
