@@ -17,7 +17,7 @@ define(['angular'], function (_) {
       name: "Workshop",
       description: "A shop that has tools and machinery where things are made and fixed.",
       cost: 30,
-      baseMoneyPerSecond: 6,
+      baseMoneyPerSecond: 3,
       moneyPerSecond: function (count, city, game) {
         return count * this.baseMoneyPerSecond;
       },
@@ -27,7 +27,7 @@ define(['angular'], function (_) {
       name: "Market",
       description: "A place for puchase and sale of provisions, livestock and other goods.",
       cost: 180,
-      baseMoneyPerSecond: 36,
+      baseMoneyPerSecond: 9,
       moneyPerSecond: function (count, city, game) {
         return count * this.baseMoneyPerSecond;
       },
@@ -37,7 +37,7 @@ define(['angular'], function (_) {
       name: "School",
       description: "An instituion of learning.",
       cost: 1080,
-      baseMoneyPerSecond: 216,
+      baseMoneyPerSecond: 27,
       moneyPerSecond: function (count, city, game) {
         return count * this.baseMoneyPerSecond;
       },
@@ -47,7 +47,7 @@ define(['angular'], function (_) {
       name: "Bank",
       description: "Show me the money.",
       cost: 6480,
-      baseMoneyPerSecond: 1296,
+      baseMoneyPerSecond: 81,
       moneyPerSecond: function (count, city, game) {
         return count * this.baseMoneyPerSecond;
       },
