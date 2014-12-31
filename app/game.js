@@ -1,24 +1,47 @@
 define(['angular', 'data/constants'], function (_) {
   function Game($interval, Achievements, Buildings, CityNames, Constants, Upgrades) {
+    // TODO: Some of these are true constants, others are just data.  Make it consistent.
+    this.Achievements = Achievements;
     this.Buildings = Buildings;
     this.CityNames = CityNames;
     this.Constants = Constants;
     this.Upgrades = Upgrades;
 
-    this.achievementsAvailable = Achievements;
+    $interval(angular.bind(this, this.perTick), Constants.updateDelay);
+    $interval(angular.bind(this, this.saveState), Constants.saveDelay);
+
+    this.achievementsAvailable = [];
     this.achievementsAcquired = [];
     this.achievementScore = 0;
 
     this.cities = [];
 
-    this.money = Constants.initialMoney;
+    this.money = 0;
+    this.moneyPerSecond = 0;
+    this.goldMultiplier = 1.0;
+
+    this.upgradesPurchased_ = {};
+
+    if (localStorage.game) {
+      this.loadState();
+    } else {
+      this.reset();
+    }
+  };
+
+  Game.prototype.reset = function () {
+    this.achievementsAvailable = this.Achievements;
+    this.achievementsAcquired = [];
+    this.achievementScore = 0;
+
+    this.cities = [];
+
+    this.money = this.Constants.initialMoney;
     this.moneyPerSecond = 0;
     this.goldMultiplier = 1.0;
 
     // Private
     this.upgradesPurchased_ = {};
-
-    $interval(angular.bind(this, this.perTick), Constants.updateDelay);
 
     this.buildCity();
   };
@@ -168,6 +191,64 @@ define(['angular', 'data/constants'], function (_) {
     this.achievementsAvailable = available;
   };
 
+  Game.prototype.getState = function () {
+    var achievements = this.achievementsAcquired.map(function (achievement) {
+      return achievement.id;
+    });
+    var cities = this.cities.map(function (city) {
+      return city.getState();
+    });
+    return {
+      money: this.money,
+      upgrades: this.upgradesPurchased_,
+      achievements: achievements,
+      achievementScore: this.achievementScore,
+      cities: cities,
+    };
+  };
+
+  Game.prototype.setState = function (state) {
+    this.money = state.money;
+    Object.keys(state.upgrades).forEach(function (upgradeId) {
+      this.upgradesPurchased_[upgradeId] = state.upgrades[upgradeId];
+      var upgrade = this.Upgrades[upgradeId];
+      for (var i = 0; i < this.upgradesPurchased_[upgradeId]; i++) {
+        upgrade.onPurchase(this);
+      }
+    }, this);
+
+    this.achievementScore = state.achievementScore;
+    this.achievementsAcquired = [];
+    this.achievementsAvailable = [];
+    this.Achievements.forEach(function (achievement) {
+      if (state.achievements.indexOf(achievement.id) >= 0) {
+        this.achievementsAcquired.push(achievement);
+      } else {
+        this.achievementsAvailable.push(achievement);
+      }
+    }, this);
+
+    this.cities = state.cities.map(function (cityState) {
+      var city = new City();
+      city.setState(cityState);
+      return city;
+    });
+  };
+
+  Game.prototype.saveState = function () {
+    localStorage.game = JSON.stringify(this.getState());
+  };
+
+  Game.prototype.loadState = function () {
+    var state = JSON.parse(localStorage.game);
+    this.setState(state);
+  };
+
+  Game.prototype.resetState = function () {
+    delete localStorage.game;
+    this.reset();
+  };
+
   function City(name) {
     this.name = name;
     this.population = 1;
@@ -195,6 +276,22 @@ define(['angular', 'data/constants'], function (_) {
 
   City.prototype.getPenalty = function () {
     return this.buildingPenalty - 1;
+  };
+
+  City.prototype.getState = function () {
+    return {
+      name: this.name,
+      population: this.population,
+      buildingPenalty: this.buildingPenalty,
+      buildings: this.buildings,
+    };
+  };
+
+  City.prototype.setState = function (state) {
+    this.name = state.name;
+    this.population = state.population;
+    this.buildingPenalty = state.buildingPenalty;
+    this.buildings = state.buildings;
   };
 
   var m = angular.module('EB.Game', ['EB.Constants']);

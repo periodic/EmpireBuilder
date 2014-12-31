@@ -22,6 +22,10 @@ define(['angular'], function () {
     this.$state.go('achievements');
   };
 
+  GameController.prototype.onShowSettings = function (event) {
+    this.$state.go('settings');
+  };
+
   GameController.prototype.onSelectCity = function (event, cityId) {
     event.stopPropagation();
 

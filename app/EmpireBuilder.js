@@ -40,5 +40,10 @@ define([
         templateUrl: "app/views/achievements.html",
         controller: 'AchievementsController',
       })
+      .state("settings", {
+        url: "/settings",
+        templateUrl: "app/views/settings.html",
+        controller: 'SettingsController',
+      })
     });
 });

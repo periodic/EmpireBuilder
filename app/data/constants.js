@@ -9,6 +9,7 @@ define(['angular', 'data/achievements', 'data/buildings', 'data/cities', 'data/u
 
   m.constant('Constants', {
     updateDelay: 100, // ms
+    saveDelay: 1000, // ms
     baseCityCost: 10,
     initialMoney: 1000,
     growthFactors: {
