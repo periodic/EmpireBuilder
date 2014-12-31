@@ -21,6 +21,12 @@
   list-style: none;
   padding-right: 20px;
   font-weight: bold;
+  cursor: pointer;
+}
+
+.city-list {
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 table .name {
@@ -34,17 +40,18 @@ table .money-delta {
   width: 100px;
 }
 
-.city-list {
-  margin-bottom: 20px;
-  margin-top: 20px;
-}
-
 table tbody tr.selected {
   background-color: #d9edf7
 }
 
 table tbody tr:hover {
   background-color: #d9edf7
+}
+
+table.city-list tr,
+table.upgrades-available tr,
+table.building-list tr {
+  cursor: pointer;
 }
 
 /*

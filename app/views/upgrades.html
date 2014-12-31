@@ -13,7 +13,7 @@
         <tr ng-repeat="upgrade in upgradesController.upgradesAvailable"
            ng-click="upgradesController.purchase(upgrade.id)">
           <td class="name">{{ upgrade.name }}</td>
-          <td class="cost">{{ upgradesController.game.upgradeCost(upgrade.id) }}</td>
+          <td class="cost">{{ upgradesController.game.upgradeCost(upgrade.id) | number:0 }}</td>
           <td class="description">{{ upgrade.description }}</td>
           <td class="actions"><a class="btn btn-primary">Buy</a></td>
         </tr>
