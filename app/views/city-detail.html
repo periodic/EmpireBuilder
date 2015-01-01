@@ -1,8 +1,25 @@
 <div class="city-detail">
   <h3 class="city-name">{{ cityController.city.name }}</h3>
   <p class="city-distance-penalty">Distance: {{ cityController.city.distance | number:0 }}</p>
-  <p class="city-cost-multiplier">Costs: {{ cityController.city.costMultiplier * 100 | number:0 }}%</p>
-  <p class="city-gold-multiplier">Gold: {{ cityController.city.goldMultiplier * 100 | number:0 }}%</p>
+
+  <div class="modifiers" ng-if="cityController.hasModifiers()">
+    <table class="table modifier-list">
+      <thead>
+        <tr class="modifier-list-header">
+          <th>Modifier</th>
+          <th>Strength</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="modifier in cityController.getModifiers()">
+          <td>{{ cityController.getModifierName(modifier) }}</td>
+          <td>{{ cityController.getModifierStrength(modifier) | number:0 }}</td>
+          <td>{{ cityController.getModifierDescription(modifier) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <table class='building-list table'>
     <thead>

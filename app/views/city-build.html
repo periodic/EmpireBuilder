@@ -1,0 +1,34 @@
+Build City
+
+
+<div ng-if="buildCityController.hasSites()">
+  <table class='city-site-list table'>
+    <thead>
+      <tr class="city-site-list-header">
+        <th class="distance">Distance</th>
+        <th class="modifiers">Modifiers</th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="citySite in buildCityController.getSites()">
+        <td class="name">{{ citySite.distance | number:0 }}</td>
+        <td class="modifiers">
+          <span ng-repeat="modifier in citySite.getModifiers()">
+            {{ modifier.id }} ({{ modifier.strength * 100 | number:0 }})
+            <span ng-if="!$first">,</span>
+          </span>
+        </td>
+        <td class="actions">
+          <a class="btn btn-info" ng-click="buildCityController.buildCity($index)">
+            Build City ({{ buildCityController.buildCost() }})</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <a class="btn btn-primary" ng-click="buildCityController.explore()">Explore ({{ buildCityController.exploreCost() | roundUp }})</a>
+</div>
+

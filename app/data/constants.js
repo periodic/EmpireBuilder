@@ -22,6 +22,7 @@ define([
     buildings: Buildings,
     buildingsById: createIdMap(Buildings),
     cityNames: Cities.names,
+    cityRandomModifiers: Cities.randomModifiers,
     cityModifiers: Cities.modifiers,
     cityModifiersById: createIdMap(Cities.modifiers),
     upgrades: Upgrades,
@@ -35,11 +36,14 @@ define([
     distanceFudgeFactor: 0.1,
     baseModifierChance: 0.5,
     baseModifierStrength: 0.10,
+    baseExplorationCost: 100,
+
     growthFactors: {
       building: 1.2,
       cityCost: 2.0,
       upgrade: 1.5,
       distance: 1.2,
+      exploration: 1.5,
     },
   };
 });

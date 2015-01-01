@@ -3,20 +3,28 @@ define(['data/constants'], function (Constants) {
     $interval(angular.bind(this, this.perTick), Constants.updateDelay);
     $interval(angular.bind(this, this.saveState), Constants.saveDelay);
 
-    this.achievementsAvailable = [];
+    // Game State
     this.achievementsAcquired = [];
     this.achievementScore = 0;
 
     this.cities = [];
-
+    this.sites = [];
     this.money = 0;
-    this.moneyPerSecond = 0;
-    this.goldMultiplier = 1.0;
+    this.exploration = 0;
+    this.nextExplorationCost = 0;
 
-    // upgradeId -> count
-    this.upgradesPurchased_ = {};
-    // buildingId -> modified building
-    this.buildingsById_ = {}
+    this.upgradesPurchased_ = {}; // upgradeId -> count
+
+    // Dynamic properties
+    this.achievementsAvailable = [];
+
+    this.moneyPerSecond = 0;
+    this.moneyMultiplier = 1.0;
+
+    this.explorationPerSecond = 0;
+    this.explorationMultiplier = 1.0;
+
+    this.buildingsById_ = {}; // buildingId -> modified building
 
     if (localStorage.game) {
       this.loadState();
@@ -32,10 +40,14 @@ define(['data/constants'], function (Constants) {
     this.achievementScore = 0;
 
     this.cities = [];
+    this.sites = [];
 
     this.money = Constants.initialMoney;
     this.moneyPerSecond = 0;
-    this.goldMultiplier = 1.0;
+    this.moneyMultiplier = 1.0;
+
+    this.exploration = 0;
+    this.nextExplorationCost = Constants.baseExplorationCost;
 
     // Private
     this.upgradesPurchased_ = {};
@@ -48,30 +60,26 @@ define(['data/constants'], function (Constants) {
       this.buildingsById_[building.id] = b;
     }, this);
 
-    this.buildCity();
+    var capitolSite = this.makeCapitolSite();
+    this.buildCity(capitolSite);
   };
 
-  Game.prototype.getCity = function (cityId) {
-    return cityId < this.cities.length ? this.cities[cityId] : undefined;
-  };
+  Game.prototype.numCities = function () { return this.cities.length; };
+  Game.prototype.getCities = function () { return this.cities; };
+  Game.prototype.getCity = function (cityId) { return this.cities[cityId]; };
+  Game.prototype.getCapitol = function () { return this.cities[0]; };
 
-  Game.prototype.getBuilding = function (buildingId) {
-    return this.buildingsById_[buildingId];
-  };
+  Game.prototype.numSites = function () { return this.sites.length; };
+  Game.prototype.hasSites = function () { return this.sites.length > 0; };
+  Game.prototype.getSites = function () { return this.sites };
+  Game.prototype.getSite = function (siteId) { return this.sites[siteId]; };
 
-  // Returns the list of buildings.
-  Game.prototype.getBuildings = function () {
-    return this.buildings_;
-  };
-
+  Game.prototype.getBuilding = function (buildingId) { return this.buildingsById_[buildingId]; };
+  Game.prototype.getBuildings = function () { return this.buildings_; };
   Game.prototype.numBuildings = function (buildingId) {
     return this.cities.reduce(function (sum, city) {
       return sum + city.numBuildings(buildingId);
     }, 0);
-  };
-
-  Game.prototype.numCities = function () {
-    return this.cities.length;
   };
 
   Game.prototype.purchaseBuilding = function (cityId, buildingId) {
@@ -86,45 +94,79 @@ define(['data/constants'], function (Constants) {
     this.checkAchievements();
   };
 
-  Game.prototype.purchaseCity = function () {
+  Game.prototype.purchaseCity = function (siteIndex) {
     var cost = this.cityCost();
-
     if (this.money >= cost) {
+      var site = this.sites.splice(siteIndex, 1)[0];
       this.money = this.money - cost;
-      this.buildCity();
+      this.buildCity(site);
+      this.updateCapitolStrength();
       return this.cities.length - 1;
     }
-
     return -1;
   };
 
-  Game.prototype.buildCity = function () {
-    var city = new City();
-    city.name = this.generateCityName();
+  Game.prototype.purchaseSite = function () {
+    if (this.exploration >= this.nextExplorationCost) {
+      this.sites.push(this.buildSite());
+      this.exploration = this.exploration - this.nextExplorationCost;
+      this.nextExplorationCost = this.nextExplorationCost * Constants.growthFactors.exploration;
+    }
+  };
+
+  Game.prototype.buildSite = function () {
+    var site = new Site();
+
     // d = base * (growth^cities - 1)
-    city.distance = Constants.baseDistance *
+    site.distance = Constants.baseDistance *
         (Math.pow(Constants.growthFactors.distance, this.cities.length) - 1);
     // d = d * (1 ± fudge)
-    city.distance = city.distance *
+    site.distance = site.distance *
         ((Math.random() * 2 - 1) * Constants.distanceFudgeFactor + 1);
-    city.distanceCostModifier = city.distance / Constants.baseDistance + 1;
+    site.distanceCostModifier = site.distance / Constants.baseDistance + 1;
 
-    // p = 1 - (1 - p) / (1 + m), m > 1
-    var modifierChance = 1 - (1 - Constants.baseModifierChance) / city.distanceCostModifier;
-    while (Math.random() < modifierChance) {
-      var modifierIndex = Math.floor(Math.random() * Constants.cityModifiers.length);
-      var modifier = Constants.cityModifiers[modifierIndex];
-      city.modifiers.push({
-        id: modifier.id,
-        strength: Math.random() * Constants.baseModifierStrength *
-                  city.distanceCostModifier,
-      });
+    // Allocate a random amount of mod strength, then use the same formula to
+    // create mods.  As long as they remain under the total strength we
+    // allocate.
+    var totalModStrength = Math.random() * Constants.baseModifierStrength * site.distanceCostModifier;
+    while (totalModStrength > 0) {
+      var modifierIndex = Math.floor(Math.random() * Constants.cityRandomModifiers.length);
+      var modifierId = Constants.cityRandomModifiers[modifierIndex];
+
+      var strength = Math.random() *
+                     Constants.baseModifierStrength *
+                     site.distanceCostModifier;
+      if (strength <= totalModStrength) {
+        site.addModifier(modifierId, strength);
+      }
+      totalModStrength = totalModStrength - strength;
     };
 
-    city.calculateModifiers();
+    return site;
+  };
+
+  Game.prototype.buildCity = function (site) {
+    var city = new City();
+    city.name = this.generateCityName();
+    city.site = site;
     this.cities.push(city);
 
     this.checkAchievements();
+  };
+
+  Game.prototype.makeCapitolSite = function () {
+    var capitolSite = new Site();
+    capitolSite.addModifier('capitol', this.cities.length);
+    return capitolSite;
+  };
+
+  Game.prototype.updateCapitolStrength = function () {
+    this.getCapitol().getModifiers().forEach(function (modifierInfo) {
+      if (modifierInfo.id == 'capitol') {
+        modifierInfo.strength = this.cities.length;
+      }
+    }, this);
+    this.getCapitol().site.calculateModifiers();
   };
 
   Game.prototype.generateCityName = function () {
@@ -136,28 +178,44 @@ define(['data/constants'], function (Constants) {
 
   Game.prototype.perTick = function () {
     var moneyDelta = 0;
+    var explorationDelta = 0;
 
     this.cities.forEach(function (city, cityId) {
-      var cityMoneyDelta = 0;
+      var cityMoneyDelta = city.site.moneyBonus *
+          this.moneyMultiplier;
+      var cityExplorationDelta = city.site.explorationBonus *
+          this.explorationMultiplier;
 
       Constants.buildings.forEach(function (building) {
         var count = city.numBuildings(building.id);
         var delta = this.buildingProfit(building.id, cityId, count);
 
-        moneyDelta = moneyDelta + delta * this.goldMultiplier;
-        cityMoneyDelta = cityMoneyDelta + delta * this.goldMultiplier;
+        cityMoneyDelta = cityMoneyDelta + delta * this.moneyMultiplier;
+        cityexplorationDelta = cityExplorationDelta + delta * this.explorationMultiplier;
       }, this);
 
-      city.moneyPerTurn = cityMoneyDelta;
+      city.moneyPerSecond = cityMoneyDelta;
+      city.explorationPerSecond = cityExplorationDelta;
+
+      moneyDelta = moneyDelta + cityMoneyDelta;
+      explorationDelta = explorationDelta + cityExplorationDelta;
     }, this);
 
     this.moneyPerSecond = moneyDelta;
+    this.explorationPerSecond = explorationDelta;
+
     this.money = this.money + moneyDelta * Constants.updateDelay / 1000;
+    this.exploration = this.exploration + explorationDelta * Constants.updateDelay / 1000;
+
     this.checkAchievements();
   };
 
   Game.prototype.trueCost = function (base, count, growthFactor) {
     return base * Math.pow(growthFactor, count);
+  };
+
+  Game.prototype.siteCost = function () {
+    return this.nextExplorationCost;
   };
 
   Game.prototype.buildingCost = function (buildingId, cityId) {
@@ -172,8 +230,8 @@ define(['data/constants'], function (Constants) {
   Game.prototype.buildingProfit = function (buildingId, cityId, count) {
     var building = this.buildingsById_[buildingId];
     var city = this.cities[cityId];
-    return city.goldMultiplier *
-        this.goldMultiplier *
+    return city.site.moneyMultiplier *
+        this.moneyMultiplier *
         building.moneyPerSecond(count, city, this);
   };
 
@@ -250,17 +308,24 @@ define(['data/constants'], function (Constants) {
     var cities = this.cities.map(function (city) {
       return city.getState();
     });
+    var sites = this.sites.map(function (site) {
+      return site.getState();
+    });
     return {
       money: this.money,
+      exploration: this.exploration,
       upgrades: this.upgradesPurchased_,
       achievements: achievements,
       achievementScore: this.achievementScore,
       cities: cities,
+      sites: sites,
     };
   };
 
   Game.prototype.setState = function (state) {
-    this.money = state.money;
+    this.money = state.money || 0;
+    this.exploration = state.exploration || 0;
+    this.nextExplorationCost = state.nextExplorationCost || 0;
 
     this.buildingsById_ = {};
     this.buildings_ = [];
@@ -293,7 +358,17 @@ define(['data/constants'], function (Constants) {
     this.cities = state.cities.map(function (cityState) {
       var city = new City();
       city.setState(cityState);
+      if (city.hasModifier('capitol')) {
+        this.capitol = city;
+      }
       return city;
+    }, this);
+    this.updateCapitolStrength();
+
+    this.sites = state.sites.map(function (siteState) {
+      var site = new Site();
+      site.setState(siteState);
+      return site;
     });
   };
 
@@ -315,36 +390,32 @@ define(['data/constants'], function (Constants) {
   function City() {
     this.name = "";
     this.population = 1;
-    this.distance = 0;
     this.distanceCostModifier = 1.0;
     this.buildings = {}; // buildingId -> count
-    this.modifiers = [];
+    this.site = new Site();
 
     // Dynamic properties.
-    this.goldMultiplier = 1.0;
     this.costMultiplier = 1.0;
-    this.moneyPerTurn = 0;
 
-    this.calculateModifiers();
+    this.moneyBonus = 0.0;
+    this.moneyMultiplier = 1.0;
+
+    this.explorationBonus = 0.0;
+    this.explorationMultiplier = 1.0;
+
+    this.moneyPerSecond = 0;
+    this.explorationPerSecond = 0;
   };
 
-  City.prototype.calculateModifiers = function () {
-    this.costMultiplier = this.distanceCostModifier;
-    this.goldMultiplier = 1.0;
-
-    this.modifiers.forEach(function (modifierInfo) {
-      var modifier = Constants.cityModifiersById[modifierInfo.id];
-      if (! modifier) {
-        console.log("City has unknown modifier:", modifierInfo.id);
-        return;
-      }
-      var costMult = modifierInfo.strength * modifier.costMultiplier + 1;
-      this.costMultiplier = this.costMultiplier * costMult;
-
-      var goldMult = modifierInfo.strength * modifier.goldMultiplier + 1;
-      this.goldMultiplier = this.goldMultiplier * goldMult;
-    }, this);
-  };
+  Object.defineProperties(City.prototype, {
+    costMultiplier: { get: function () { return this.site.costMultiplier; }, },
+    distance: { get: function () { return this.site.distance; }, },
+    distanceCostModifier: { get: function () { return this.site.distanceCostModifier; }, },
+    moneyBonus: { get: function () { return this.site.moneyBonus; }, },
+    moneyMultiplier: { get: function () { return this.site.moneyMultiplier; }, },
+    explorationBonus: { get: function () { return this.site.explorationBonus; }, },
+    explorationMultiplier: { get: function () { return this.site.explorationMultiplier; }, },
+  });
 
   City.prototype.totalBuildings = function () {
     var total = 0;
@@ -363,6 +434,18 @@ define(['data/constants'], function (Constants) {
     this.buildings[buildingId] = count + 1;
   };
 
+  City.prototype.getModifiers = function () {
+    return this.site.getModifiers();
+  };
+
+  City.prototype.addModifier = function (modifierId, strength) {
+    this.site.addModifier(modifierId, strength);
+  };
+
+  City.prototype.hasModifier = function (modifierId) {
+    this.site.hasModifier(modifierId);
+  };
+
   City.prototype.getState = function () {
     return {
       name: this.name,
@@ -370,16 +453,98 @@ define(['data/constants'], function (Constants) {
       distance: this.distance,
       distanceCostModifier: this.distanceCostModifier,
       buildings: this.buildings,
-      modifiers: this.modifiers,
+      site: this.site.getState(),
     };
   };
 
   City.prototype.setState = function (state) {
     this.name = state.name;
     this.population = state.population;
+    this.buildings = state.buildings;
+
+    this.site = new Site();
+    this.site.setState(state.site);
+  };
+
+  function Site() {
+    this.distance = 0;
+    this.distanceCostModifier = 1.0;
+    this.modifiers = [];
+
+    // Dynamic properties.
+    this.costMultiplier = 1.0;
+
+    this.moneyBonus = 0.0;
+    this.moneyMultiplier = 1.0;
+
+    this.explorationBonus = 0.0;
+    this.explorationMultiplier = 1.0;
+
+    this.calculateModifiers();
+  };
+
+  Site.prototype.calculateModifiers = function () {
+    this.costMultiplier = this.distanceCostModifier;
+    this.moneyMultiplier = 1.0;
+
+    this.modifiers.forEach(function (modifierInfo) {
+      var modifier = Constants.cityModifiersById[modifierInfo.id];
+      if (! modifier) {
+        console.log("Site has unknown modifier:", modifierInfo.id);
+        return;
+      }
+      var costMult = modifierInfo.strength * (modifier.costMultiplier || 0) + 1;
+      this.costMultiplier = this.costMultiplier * costMult;
+
+      var moneyMult = modifierInfo.strength * (modifier.moneyMultiplier || 0) + 1;
+      this.moneyMultiplier = this.moneyMultiplier * moneyMult;
+
+      var explorationMult = modifierInfo.strength * (modifier.explorationMultiplier || 0) + 1;
+      this.explorationMultiplier = this.explorationMultiplier * explorationMult;
+
+      this.moneyBonus = this.moneyBonus + (modifier.moneyBonus || 0)
+      this.explorationBonus = this.explorationBonus + (modifier.explorationBonus || 0)
+    }, this);
+  };
+
+  Site.prototype.getModifiers = function () {
+    return this.modifiers;
+  };
+
+  Site.prototype.addModifier = function (modifierId, strength) {
+    var matchingMods = this.modifiers.filter(function (modifierInfo) {
+      return modifierInfo.id == modifierId;
+    });
+
+    if (matchingMods.length > 0) {
+      matchingMods[0].strength = matchingMods[0].strength + strength;
+    } else {
+      this.modifiers.push({
+        id: modifierId,
+        strength: strength,
+      });
+    }
+
+    this.calculateModifiers();
+  };
+
+  Site.prototype.hasModifier = function (modifierId) {
+    return this.modifiers.some(function (modifierInfo) {
+      return modifierInfo.id == modifierId;
+    });
+  };
+
+  Site.prototype.getState = function () {
+    return {
+      distance: this.distance,
+      distanceCostModifier: this.distanceCostModifier,
+      modifiers: this.modifiers,
+    };
+  };
+
+  Site.prototype.setState = function (state) {
     this.distance = state.distance;
     this.distanceCostModifier = state.distanceCostModifier;
-    this.buildings = state.buildings;
     this.modifiers = state.modifiers;
 
     this.calculateModifiers();

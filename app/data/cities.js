@@ -3,17 +3,33 @@ define([], function () {
   /* City Modifiers
    * Each modifier will have a strength value assigned to it when it is generated.
    *
-   * name: the name displayed.
-   * goldBonus: the effect of this modifier on a city's gold production.
-   * costBonus: the effect of this modifier on a city's building costs.
+   * id: the unique id to identify this modifier. (required)
+   * name: the name displayed. (required)
+   * description: the description displayed.
+   * moneyMultiplier: A multiplier on all money produced.
+   * moneyBonus: A flat amount of money/second.
+   * costMultiplier: A multiplier on the cost of buildings
+   * explorationMultiplier: A multiplier on all exploration produced.
+   * explorationBonus: A flat amount of exploration/second.
    */
   var modifiers = [
-    {
-      id: 'gold1',
-      name: "Gold Bonus",
-      goldMultiplier: 1.0,
-      costMultiplier: 0.0,
+    { // Capitol has strength 1.0 * num_cities
+      id: 'capitol',
+      name: "The Capitol",
+      moneyMultiplier: 0.1, // 10% / city
+      moneyBonus: 1.0, // 1 money / second / city
+      explorationMultiplier: 0.1, // 10% / city
+      explorationBonus: 1.0 // 1 exploration / second / city
     },
+    {
+      id: 'money1',
+      name: "money Bonus",
+      moneyMultiplier: 1.0,
+    },
+  ];
+
+  var randomModifiers = [
+    'money1',
   ];
 
   var names = [
@@ -122,5 +138,6 @@ define([], function () {
   return {
     names: names,
     modifiers: modifiers,
+    randomModifiers: randomModifiers,
   };
 });

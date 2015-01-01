@@ -28,6 +28,11 @@ define([
         templateUrl: "app/views/city-detail.html",
         controller: 'CityController',
       })
+      .state("cities.build", {
+        url: "/build",
+        templateUrl: "app/views/city-build.html",
+        controller: 'BuildCityController',
+      })
       .state("upgrades", {
         url: "/upgrades",
         templateUrl: "app/views/upgrades.html",

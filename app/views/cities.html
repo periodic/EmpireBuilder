@@ -5,6 +5,7 @@
         <tr class="city-list-header">
           <th class="name">City</th>
           <th class="money-delta">Profit</th>
+          <th class="exploration-delta">Exploration</th>
           <th class="buildings">Buildings</th>
           <th class="actions"></th>
         </tr>
@@ -12,13 +13,15 @@
       <tbody>
         <tr ng-repeat="city in gameController.game.cities" ng-click="$emit('select-city', $index)">
           <td class="name">{{ city.name }}</td>
-          <td class="money-delta">{{ city.moneyPerTurn | number:1 }}/s</td>
+          <td class="money-delta">{{ city.moneyPerSecond | number:1 }}/s</td>
+          <td class="exploration-delta">{{ city.explorationPerSecond | number:1 }}/s</td>
           <td class="buildings">{{ city.totalBuildings() }}</td>
           <td class="actions"><a class="btn btn-info">View</a></td>
         </tr>
       </tbody>
     </table>
-    <a ng-click="$emit('purchase-city')" class="btn btn-primary">Buy City ({{game.cityCost() | roundUp | number:0 }})</a>
+
+    <a class="btn btn-info" ng-click="gameController.buildCities()">Build Cities</a>
   </div>
   <div id="main-panel" class="col-md-8">
     <ui-view></ui-view>

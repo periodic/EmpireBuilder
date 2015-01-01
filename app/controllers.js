@@ -1,6 +1,7 @@
 define([
   'angular',
   'controllers/AchievementsController',
+  'controllers/BuildCityController',
   'controllers/CityController',
   'controllers/GameController',
   'controllers/SettingsController',
@@ -8,6 +9,7 @@ define([
 ], function () {
   angular.module('EB.Controllers', [
     'EB.Controllers.AchievementsController',
+    'EB.Controllers.BuildCityController',
     'EB.Controllers.CityController',
     'EB.Controllers.GameController',
     'EB.Controllers.SettingsController',

@@ -1,4 +1,4 @@
-define(['angular', 'data/constants'], function (_) {
+define(['angular', 'data/constants'], function (_, Constants) {
 
   function CityController($scope, $state, $stateParams, game) {
     $scope.cityController = this;
@@ -9,6 +9,34 @@ define(['angular', 'data/constants'], function (_) {
     if (!this.city) {
       console.log("City is not found.", this);
       $state.go('cities');
+    }
+  };
+
+  CityController.prototype.hasModifiers = function () {
+    return this.city.getModifiers().length > 0;
+  };
+
+  CityController.prototype.getModifiers = function () {
+    return this.city.getModifiers();
+  };
+
+  CityController.prototype.getModifierName = function (modifierInfo) {
+    if (Constants.cityModifiersById[modifierInfo.id]) {
+      return Constants.cityModifiersById[modifierInfo.id].name;
+    } else {
+      return "Unknown";
+    }
+  };
+
+  CityController.prototype.getModifierStrength = function (modifierInfo) {
+    return modifierInfo.strength * 100;
+  };
+
+  CityController.prototype.getModifierDescription = function (modifierInfo) {
+    if (Constants.cityModifiersById[modifierInfo.id]) {
+      return Constants.cityModifiersById[modifierInfo.id].description;
+    } else {
+      return "";
     }
   };
 
