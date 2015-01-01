@@ -50,6 +50,16 @@ define(['angular', 'data/constants'], function (_) {
     return cityId < this.cities.length ? this.cities[cityId] : undefined;
   };
 
+  Game.prototype.numBuildings = function (buildingId) {
+    return this.cities.reduce(function (sum, city) {
+      return sum + city.buildings[buildingId];
+    }, 0);
+  };
+
+  Game.prototype.numCities = function () {
+    return this.cities.length;
+  };
+
   Game.prototype.purchaseBuilding = function (cityId, buildingId) {
     var city = this.cities[cityId];
     var cost = this.buildingCost(buildingId, cityId);

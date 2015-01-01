@@ -8,9 +8,7 @@ define(['angular'], function (_) {
       description: "Build 5 farms.",
       points: 1,
       condition: function (game) {
-        return game.cities.some(function (city) {
-          return city.buildings['farm'] > 4;
-        });
+        return game.numBuildings('farm') >= 5;
       },
     },
     {
@@ -19,9 +17,7 @@ define(['angular'], function (_) {
       description: "Build 50 farms.",
       points: 2,
       condition: function (game) {
-        return 50 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['farm'];
-        }, 0);
+        return game.numBuildings('farm') >= 50;
       },
     },
     {
@@ -30,9 +26,7 @@ define(['angular'], function (_) {
       description: "Build 100 farms.",
       points: 3,
       condition: function (game) {
-        return 100 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['farm'];
-        }, 0);
+        return game.numBuildings('farm') >= 100;
       },
     },
     {
@@ -41,9 +35,7 @@ define(['angular'], function (_) {
       description: "Build 500 farms.",
       points: 4,
       condition: function (game) {
-        return 500 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['farm'];
-        }, 0);
+        return game.numBuildings('farm') >= 500;
       },
     },
     {
@@ -52,9 +44,7 @@ define(['angular'], function (_) {
       description: "Build 5 workshops.",
       points: 1,
       condition: function (game) {
-        return game.cities.some(function (city) {
-          return city.buildings['workshop'] > 4;
-        });
+        return game.numBuildings('workshop') >= 5;
       },
     },
     {
@@ -63,9 +53,7 @@ define(['angular'], function (_) {
       description: "Build 50 workshops.",
       points: 2,
       condition: function (game) {
-        return 50 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['workshop'];
-        }, 0);
+        return game.numBuildings('workshop') >= 50;
       },
     },
     {
@@ -74,9 +62,7 @@ define(['angular'], function (_) {
       description: "Build 100 workshops.",
       points: 3,
       condition: function (game) {
-        return 100 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['workshop'];
-        }, 0);
+        return game.numBuildings('workshop') >= 100;
       },
     },
     {
@@ -85,9 +71,7 @@ define(['angular'], function (_) {
       description: "Build 500 workshops.",
       points: 4,
       condition: function (game) {
-        return 500 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['workshop'];
-        }, 0);
+        return game.numBuildings('workshop') >= 500;
       },
     },
     {
@@ -96,9 +80,7 @@ define(['angular'], function (_) {
       description: "Build 5 markets.",
       points: 1,
       condition: function (game) {
-        return game.cities.some(function (city) {
-          return city.buildings['market'] > 4;
-        });
+        return game.numBuildings('market') >= 5;
       },
     },
     {
@@ -107,9 +89,7 @@ define(['angular'], function (_) {
       description: "Build 50 markets.",
       points: 2,
       condition: function (game) {
-        return 50 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['market'];
-        }, 0);
+        return game.numBuildings('market') >= 50;
       },
     },
     {
@@ -118,9 +98,7 @@ define(['angular'], function (_) {
       description: "Build 100 markets.",
       points: 3,
       condition: function (game) {
-        return 100 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['market'];
-        }, 0);
+        return game.numBuildings('market') >= 100;
       },
     },
     {
@@ -129,9 +107,7 @@ define(['angular'], function (_) {
       description: "Build 500 markets.",
       points: 4,
       condition: function (game) {
-        return 500 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['market'];
-        }, 0);
+        return game.numBuildings('market') >= 500;
       },
     },
     {
@@ -140,9 +116,7 @@ define(['angular'], function (_) {
       description: "Build 5 schools.",
       points: 1,
       condition: function (game) {
-        return game.cities.some(function (city) {
-          return city.buildings['school'] > 4;
-        });
+        return game.numBuildings('school') >= 5;
       },
     },
     {
@@ -151,9 +125,7 @@ define(['angular'], function (_) {
       description: "Build 50 schools.",
       points: 2,
       condition: function (game) {
-        return 50 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['school'];
-        }, 0);
+        return game.numBuildings('school') >= 50;
       },
     },
     {
@@ -162,9 +134,7 @@ define(['angular'], function (_) {
       description: "Build 100 schools.",
       points: 3,
       condition: function (game) {
-        return 100 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['school'];
-        }, 0);
+        return game.numBuildings('school') >= 100;
       },
     },
     {
@@ -173,9 +143,7 @@ define(['angular'], function (_) {
       description: "Build 500 schools.",
       points: 4,
       condition: function (game) {
-        return 500 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['school'];
-        }, 0);
+        return game.numBuildings('school') >= 500;
       },
     },
     {
@@ -184,9 +152,7 @@ define(['angular'], function (_) {
       description: "Build 5 banks.",
       points: 1,
       condition: function (game) {
-        return game.cities.some(function (city) {
-          return city.buildings['bank'] > 4;
-        });
+        return game.numBuildings('bank') >= 5;
       },
     },
     {
@@ -195,9 +161,7 @@ define(['angular'], function (_) {
       description: "Build 50 banks.",
       points: 2,
       condition: function (game) {
-        return 50 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['bank'];
-        }, 0);
+        return game.numBuildings('bank') >= 50;
       },
     },
     {
@@ -206,9 +170,7 @@ define(['angular'], function (_) {
       description: "Build 100 banks.",
       points: 3,
       condition: function (game) {
-        return 100 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['bank'];
-        }, 0);
+        return game.numBuildings('bank') >= 100;
       },
     },
     {
@@ -217,9 +179,7 @@ define(['angular'], function (_) {
       description: "Build 500 banks.",
       points: 4,
       condition: function (game) {
-        return 500 <= game.cities.reduce(function (sum, city) {
-          return sum + city.buildings['bank'];
-        }, 0);
+        return game.numBuildings('bank') >= 500;
       },
     },
     {
@@ -228,7 +188,7 @@ define(['angular'], function (_) {
       description: "Build 2 cities.",
       points: 1,
       condition: function (game) {
-        return 2 <= game.cities.length;
+        return game.numCities() >= 2;
       },
     },
     {
@@ -237,7 +197,7 @@ define(['angular'], function (_) {
       description: "Build 5 cities.",
       points: 1,
       condition: function (game) {
-        return 5 <= game.cities.length;
+        return game.numCities() >= 5;
       },
     },
     {
@@ -246,7 +206,7 @@ define(['angular'], function (_) {
       description: "Build 10 cities.",
       points: 1,
       condition: function (game) {
-        return 10 <= game.cities.length;
+        return game.numCities() >= 10;
       },
     },
     {
@@ -255,7 +215,7 @@ define(['angular'], function (_) {
       description: "Build 50 cities.",
       points: 1,
       condition: function (game) {
-        return 50 <= game.cities.length;
+        return game.numCities() >= 50;
       },
     },
   ]);
