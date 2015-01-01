@@ -1,19 +1,17 @@
 define([
+  'game',
   'angular',
   'uirouter',
-  'data/constants',
   'directives',
   'filters',
-  'game',
-  'controllers'], function (_) {
+  'controllers'], function (Game) {
   angular.module('EB', [
     'ui.router',
-    'EB.Constants',
     'EB.Controllers',
     'EB.Directives',
     'EB.Filters',
-    'EB.Game',
     ])
+    .service('game', Game)
     .config(function($stateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise("/city");
 

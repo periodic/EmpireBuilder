@@ -1,6 +1,4 @@
-define(['angular'], function (_) {
-  var m = angular.module('EB.Achievements', []);
-
+define([], function () {
   function numBuildings(buildingId) {
     return function (game) {
       return game.numBuildings(buildingId);
@@ -13,7 +11,7 @@ define(['angular'], function (_) {
     };
   };
 
-  m.constant('Achievements', [
+  return [
     {
       id: "farm1",
       name: "Digging in",
@@ -206,7 +204,7 @@ define(['angular'], function (_) {
       metric: numCities(),
       goal: 50,
     },
-  ]);
+  ];
 });
 
 //game.cities.length

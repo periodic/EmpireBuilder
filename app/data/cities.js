@@ -1,7 +1,22 @@
-define(['angular'], function (_) {
-  var m = angular.module('EB.CityNames', []);
+define([], function () {
 
-  m.constant('CityNames', [
+  /* City Modifiers
+   * Each modifier will have a strength value assigned to it when it is generated.
+   *
+   * name: the name displayed.
+   * goldBonus: the effect of this modifier on a city's gold production.
+   * costBonus: the effect of this modifier on a city's building costs.
+   */
+  var modifiers = [
+    {
+      id: 'gold1',
+      name: "Gold Bonus",
+      goldMultiplier: 1.0,
+      costMultiplier: 0.0,
+    },
+  ];
+
+  var names = [
     { name: "Tokyo", country: "Japan", rank: 1 },
     { name: "Jakarta", country: "Indonesia", rank: 2 },
     { name: "Seoul", country: "South", rank: 3 },
@@ -102,5 +117,10 @@ define(['angular'], function (_) {
     { name: "Dalian", country: "China", rank: 98 },
     { name: "Fuzhou", country: "China", rank: 99 },
     { name: "Medellin", country: "Colombia", rank: 100 },
-  ]);
+  ];
+
+  return {
+    names: names,
+    modifiers: modifiers,
+  };
 });

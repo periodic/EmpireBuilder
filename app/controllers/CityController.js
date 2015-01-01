@@ -1,8 +1,7 @@
-define(['angular'], function () {
+define(['angular', 'data/constants'], function (_) {
 
-  function CityController($scope, $state, $stateParams, game, Buildings) {
+  function CityController($scope, $state, $stateParams, game) {
     $scope.cityController = this;
-    $scope.Buildings = Buildings;
 
     this.game = game;
     this.cityId = $stateParams['cityId'];
@@ -11,25 +10,27 @@ define(['angular'], function () {
       console.log("City is not found.", this);
       $state.go('cities');
     }
-  }
+  };
+
+  CityController.prototype.getBuildings = function () {
+    return this.game.getBuildings();
+  };
+
+  CityController.prototype.getBuildingCount = function(buildingId) {
+    return this.city.numBuildings(buildingId);
+  };
 
   CityController.prototype.getBuildingCost = function(buildingId) {
     return this.game.buildingCost(buildingId, this.cityId);
-  }
-
-  CityController.prototype.getBuildingCount = function(buildingId) {
-    return this.city.buildings[buildingId] || 0;
-  }
+  };
 
   CityController.prototype.getBuildingProfit = function(buildingId) {
-    var building = this.game.getBuilding(buildingId);
-    return building.moneyPerSecond(this.getBuildingCount(buildingId), this.city, this.game);
-  }
+    return this.game.buildingProfit(buildingId, this.cityId, this.getBuildingCount(buildingId));
+  };
 
   CityController.prototype.getProfitPerBuilding = function(buildingId) {
-    var building = this.game.getBuilding(buildingId);
-    return building.moneyPerSecond(1, this.city, this.game);
-  }
+    return this.game.buildingProfit(buildingId, this.cityId, 1);
+  };
 
   CityController.prototype.purchase = function (buildingId) {
     this.game.purchaseBuilding(this.cityId, buildingId);

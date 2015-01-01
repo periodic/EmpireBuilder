@@ -1,7 +1,6 @@
-define(['angular'], function (_) {
-  var m = angular.module('EB.Buildings', []);
+define([], function () {
 
-  m.constant('Buildings', [
+  return [
     {
       id: "farm",
       name: "Farm",
@@ -52,5 +51,5 @@ define(['angular'], function (_) {
         return count * this.baseMoneyPerSecond;
       },
     },
-  ]);
+  ];
 });

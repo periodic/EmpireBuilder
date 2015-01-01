@@ -1,6 +1,8 @@
 <div class="city-detail">
   <h3 class="city-name">{{ cityController.city.name }}</h3>
-  <p class="city-distance-penalty">Distance Penalty: {{ cityController.city.getPenalty() * 100 | number:0 }}%</p>
+  <p class="city-distance-penalty">Distance: {{ cityController.city.distance | number:0 }}</p>
+  <p class="city-cost-multiplier">Costs: {{ cityController.city.costMultiplier * 100 | number:0 }}%</p>
+  <p class="city-gold-multiplier">Gold: {{ cityController.city.goldMultiplier * 100 | number:0 }}%</p>
 
   <table class='building-list table'>
     <thead>
@@ -15,7 +17,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="building in Buildings" ng-click="cityController.purchase(building.id)">
+      <tr ng-repeat="building in cityController.getBuildings()"
+          ng-click="cityController.purchase(building.id)">
         <td class="name">{{ building.name }}</td>
         <td class="count">{{ cityController.getBuildingCount(building.id) | number:0 }}</td>
         <td class="cost">{{ cityController.getBuildingCost(building.id) | roundUp | number:0 }}</td>

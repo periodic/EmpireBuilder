@@ -1,23 +1,45 @@
-define(['angular', 'data/achievements', 'data/buildings', 'data/cities', 'data/upgrades'], function (_) {
+define([
+  'data/achievements',
+  'data/buildings',
+  'data/cities',
+  'data/upgrades'], function (
+    Achievements,
+    Buildings,
+    Cities,
+    Upgrades) {
 
-  var m = angular.module('EB.Constants', [
-    'EB.Achievements',
-    'EB.Buildings',
-    'EB.CityNames',
-    'EB.Upgrades',
-  ]);
+  function createIdMap(array) {
+    var map = {};
+    array.forEach(function (elem) {
+      map[elem.id] = elem;
+    });
+    return map;
+  };
 
-  m.constant('Constants', {
+  return {
+    achievements: Achievements,
+    achievementsById: createIdMap(Achievements),
+    buildings: Buildings,
+    buildingsById: createIdMap(Buildings),
+    cityNames: Cities.names,
+    cityModifiers: Cities.modifiers,
+    cityModifiersById: createIdMap(Cities.modifiers),
+    upgrades: Upgrades,
+    upgradesById: createIdMap(Upgrades),
+
     updateDelay: 100, // ms
     saveDelay: 1000, // ms
     baseCityCost: 10,
     initialMoney: 25,
+    baseDistance: 100,
+    distanceFudgeFactor: 0.1,
+    baseModifierChance: 0.5,
+    baseModifierStrength: 0.10,
     growthFactors: {
       building: 1.2,
       cityCost: 2.0,
       upgrade: 1.5,
-      cityBuildings: 1.2,
+      distance: 1.2,
     },
-  });
-
+  };
 });

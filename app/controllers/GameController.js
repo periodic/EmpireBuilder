@@ -7,7 +7,7 @@ define(['angular'], function () {
     this.game = game;
 
     $scope.$on('select-city', angular.bind(this, this.onSelectCity));
-    $scope.$on('purchaseCity', angular.bind(this, this.onPurchaseCity));
+    $scope.$on('purchase-city', angular.bind(this, this.onPurchaseCity));
   };
 
   GameController.prototype.onShowCities = function (event) {
@@ -33,6 +33,7 @@ define(['angular'], function () {
   };
 
   GameController.prototype.onPurchaseCity = function (event) {
+    console.log("Purchasing city.");
     event.stopPropagation();
 
     var cityId = this.game.purchaseCity();

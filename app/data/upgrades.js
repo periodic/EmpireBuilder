@@ -1,8 +1,6 @@
-define(['angular'], function (_) {
-  var m = angular.module('EB.Upgrades', []);
-
-  m.constant('Upgrades', {
-    'water-tech': {
+define([], function () {
+  return [
+    {
       id: "water-tech",
       name: "Water Tech",
       description: "Improves farms by 20%.",
@@ -12,7 +10,7 @@ define(['angular'], function (_) {
         building.baseMoneyPerSecond = building.baseMoneyPerSecond * 1.2;
       },
     },
-    wonder: {
+    {
       id: "wonder",
       name: "One-Point Wonder",
       description: "Increases all gold generation by 20%.  Can only be purchased once.",
@@ -22,5 +20,5 @@ define(['angular'], function (_) {
         game.goldMultiplier = game.goldMultiplier + 0.2;
       },
     },
-  });
+  ];
 });
