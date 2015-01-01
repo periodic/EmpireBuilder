@@ -18,7 +18,8 @@
     </tbody>
     <tbody>
       <tr ng-repeat="achievement in achievementsController.game.achievementsAvailable">
-        <td class="check"></td>
+        <td class="check">{{ achievementsController.getMetric(achievement) | number:0 }} /
+          {{ achievement.goal | number:0 }}</td>
         <td class="name">{{ achievement.name }}</td>
         <td class="points">{{ achievement.points | number:0 }}</td>
         <td class="description">{{ achievement.description }}</td>

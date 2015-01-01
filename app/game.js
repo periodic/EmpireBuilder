@@ -64,7 +64,7 @@ define(['angular', 'data/constants'], function (_) {
 
   Game.prototype.numBuildings = function (buildingId) {
     return this.cities.reduce(function (sum, city) {
-      return sum + city.buildings[buildingId];
+      return sum + city.numBuildings(buildingId);
     }, 0);
   };
 
@@ -201,7 +201,7 @@ define(['angular', 'data/constants'], function (_) {
   Game.prototype.checkAchievements = function () {
     var available = [];
     this.achievementsAvailable.forEach(function (achievement) {
-      if (achievement.condition(this)) {
+      if (achievement.metric(this) >= achievement.goal) {
         this.achievementsAcquired.push(achievement);
         this.achievementScore = this.achievementScore + achievement.points;
         console.log("Achieved:", achievement);
