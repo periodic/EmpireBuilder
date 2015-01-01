@@ -8,8 +8,8 @@ define(['angular'], function (_) {
       description: "Improves farms by 20%.",
       cost: 100,
       onPurchase: function (game) {
-        game.Buildings['farm'].baseMoneyPerSecond 
-          = game.Buildings['farm'].baseMoneyPerSecond * 1.2;
+        var building = game.getBuilding('farm');
+        building.baseMoneyPerSecond = building.baseMoneyPerSecond * 1.2;
       },
     },
     wonder: {

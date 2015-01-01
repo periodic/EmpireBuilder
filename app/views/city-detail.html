@@ -8,6 +8,8 @@
         <th class="name">Building</th>
         <th class="count">Built</th>
         <th class="cost">Cost</th>
+        <th class="money-delta">Profit</th>
+        <th class="money-delta">Profit/Bldg</th>
         <th class="description">Description</th>
         <th class="actions"></th>
       </tr>
@@ -17,6 +19,8 @@
         <td class="name">{{ building.name }}</td>
         <td class="count">{{ cityController.getBuildingCount(building.id) | number:0 }}</td>
         <td class="cost">{{ cityController.getBuildingCost(building.id) | roundUp | number:0 }}</td>
+        <td class="money-delta">{{ cityController.getBuildingProfit(building.id) | number:1 }}</td>
+        <td class="money-delta">{{ cityController.getProfitPerBuilding(building.id) | number:1 }}</td>
         <td class="description">{{ building.description }}</td>
         <td class="actions"><a class="btn btn-primary">Buy</a></td>
       </tr>

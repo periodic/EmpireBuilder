@@ -23,6 +23,16 @@ define(['angular'], function () {
     return this.city.buildings[buildingId] || 0;
   }
 
+  CityController.prototype.getBuildingProfit = function(buildingId) {
+    var building = this.game.getBuilding(buildingId);
+    return building.moneyPerSecond(this.getBuildingCount(buildingId), this.city, this.game);
+  }
+
+  CityController.prototype.getProfitPerBuilding = function(buildingId) {
+    var building = this.game.getBuilding(buildingId);
+    return building.moneyPerSecond(1, this.city, this.game);
+  }
+
   CityController.prototype.purchase = function (buildingId) {
     this.game.purchaseBuilding(this.cityId, buildingId);
   };

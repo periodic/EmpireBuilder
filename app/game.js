@@ -21,12 +21,14 @@ define(['angular', 'data/constants'], function (_) {
     this.goldMultiplier = 1.0;
 
     this.upgradesPurchased_ = {};
+    this.buildings_ = {}
 
     if (localStorage.game) {
       this.loadState();
     } else {
       this.reset();
     }
+    console.log(this);
   };
 
   Game.prototype.reset = function () {
@@ -42,12 +44,22 @@ define(['angular', 'data/constants'], function (_) {
 
     // Private
     this.upgradesPurchased_ = {};
+    this.buildings_ = {}
+    this.Buildings.forEach(function (building) {
+      var b = {};
+      b.__proto__ = building;
+      this.buildings_[building.id] = b;
+    }, this);
 
     this.buildCity();
   };
 
   Game.prototype.getCity = function (cityId) {
     return cityId < this.cities.length ? this.cities[cityId] : undefined;
+  };
+
+  Game.prototype.getBuilding = function (buildingId) {
+    return this.buildings_[buildingId];
   };
 
   Game.prototype.numBuildings = function (buildingId) {
@@ -107,7 +119,7 @@ define(['angular', 'data/constants'], function (_) {
     this.cities.forEach(angular.bind(this, function (city) {
       var cityMoneyDelta = 0;
       Object.keys(city.buildings).forEach(angular.bind(this, function (buildingId) {
-        var building = this.Buildings[buildingId];
+        var building = this.buildings_[buildingId];
         var count = city.buildings[buildingId];
         var delta = building.moneyPerSecond(count, city, this);
         moneyDelta = moneyDelta + delta * this.goldMultiplier;
@@ -126,7 +138,7 @@ define(['angular', 'data/constants'], function (_) {
   };
 
   Game.prototype.buildingCost = function (buildingId, cityId) {
-    var building = this.Buildings[buildingId];
+    var building = this.buildings_[buildingId];
     var city = this.cities[cityId];
     return city.buildingPenalty *
         this.trueCost(building.cost, city.numBuildings(buildingId), this.Constants.growthFactors.building);
@@ -219,6 +231,14 @@ define(['angular', 'data/constants'], function (_) {
 
   Game.prototype.setState = function (state) {
     this.money = state.money;
+
+    Object.keys(this.Buildings).forEach(function (buildingId) {
+      var building = this.Buildings[buildingId];
+      var b = {};
+      b.__proto__ = building;
+      this.buildings_[building.id] = b;
+    }, this);
+
     Object.keys(state.upgrades).forEach(function (upgradeId) {
       this.upgradesPurchased_[upgradeId] = state.upgrades[upgradeId];
       var upgrade = this.Upgrades[upgradeId];
