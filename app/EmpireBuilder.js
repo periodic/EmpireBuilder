@@ -13,7 +13,7 @@ define([
     ])
     .service('game', Game)
     .config(function($stateProvider, $urlRouterProvider) {
-      $urlRouterProvider.otherwise("/city");
+      $urlRouterProvider.otherwise("/cities");
 
       $stateProvider
       .state("cities", {
