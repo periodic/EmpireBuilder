@@ -62,6 +62,10 @@ define(['angular', 'data/constants'], function (_) {
     return this.buildings_[buildingId];
   };
 
+  Game.prototype.getBuildings = function () {
+    return this.buildings_;
+  };
+
   Game.prototype.numBuildings = function (buildingId) {
     return this.cities.reduce(function (sum, city) {
       return sum + city.numBuildings(buildingId);
@@ -232,8 +236,7 @@ define(['angular', 'data/constants'], function (_) {
   Game.prototype.setState = function (state) {
     this.money = state.money;
 
-    Object.keys(this.Buildings).forEach(function (buildingId) {
-      var building = this.Buildings[buildingId];
+    this.Buildings.forEach(function (building) {
       var b = {};
       b.__proto__ = building;
       this.buildings_[building.id] = b;

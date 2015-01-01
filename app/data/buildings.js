@@ -1,8 +1,8 @@
 define(['angular'], function (_) {
   var m = angular.module('EB.Buildings', []);
 
-  m.constant('Buildings', {
-    farm: {
+  m.constant('Buildings', [
+    {
       id: "farm",
       name: "Farm",
       description: "Has goats, chickens, and a variety of crops.",
@@ -12,7 +12,7 @@ define(['angular'], function (_) {
         return count * this.baseMoneyPerSecond;
       },
     },
-    workshop: {
+    {
       id: "workshop",
       name: "Workshop",
       description: "A shop that has tools and machinery where things are made and fixed.",
@@ -22,7 +22,7 @@ define(['angular'], function (_) {
         return count * this.baseMoneyPerSecond;
       },
     },
-    market: {
+    {
       id: "market",
       name: "Market",
       description: "A place for puchase and sale of provisions, livestock and other goods.",
@@ -32,7 +32,7 @@ define(['angular'], function (_) {
         return count * this.baseMoneyPerSecond;
       },
     },
-    school: {
+    {
       id: "school",
       name: "School",
       description: "An instituion of learning.",
@@ -42,7 +42,7 @@ define(['angular'], function (_) {
         return count * this.baseMoneyPerSecond;
       },
     },
-    bank: {
+    {
       id: "bank",
       name: "Bank",
       description: "Show me the money.",
@@ -52,5 +52,5 @@ define(['angular'], function (_) {
         return count * this.baseMoneyPerSecond;
       },
     },
-  });
+  ]);
 });
