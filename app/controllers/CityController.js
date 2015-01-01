@@ -11,8 +11,6 @@ define(['angular'], function () {
       console.log("City is not found.", this);
       $state.go('cities');
     }
-
-    $scope.$on('purchaseBuilding', angular.bind(this, this.onPurchase));
   }
 
   CityController.prototype.getBuildingCost = function(buildingId) {
