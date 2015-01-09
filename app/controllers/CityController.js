@@ -68,6 +68,10 @@ define(['angular', 'data/constants'], function (_, Constants) {
     this.game.purchaseBuilding(this.cityId, buildingId);
   };
 
+  CityController.prototype.canPurchase = function (buildingId) {
+    return this.getBuildingCost(buildingId) < this.game.money;
+  };
+
   var m = angular.module('EB.Controllers.CityController', []);
   m.controller('CityController', CityController);
 });

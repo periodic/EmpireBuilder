@@ -23,8 +23,16 @@ define(['angular'], function () {
     return this.game.siteCost();
   };
 
+  BuildCityController.prototype.canExplore = function () {
+    return this.exploreCost() <= this.game.exploration;
+  };
+
   BuildCityController.prototype.explore = function () {
     this.game.purchaseSite();
+  };
+
+  BuildCityController.prototype.canBuild = function () {
+    return this.buildCost() <= this.game.money;
   };
 
   BuildCityController.prototype.buildCity = function (siteIndex) {

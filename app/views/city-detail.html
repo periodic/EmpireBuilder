@@ -62,7 +62,8 @@
         -->
         <td class="description">{{ building.description }}</td>
         <td class="actions">
-          <a class="btn btn-primary" ng-click="cityController.purchase(building.id)">Buy</a>
+          <a class="btn btn-primary" ng-click="cityController.purchase(building.id)"
+            ng-class="cityController.canPurchase(building.id) || 'disabled'">Buy</a>
         </td>
       </tr>
     </tbody>

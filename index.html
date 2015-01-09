@@ -16,19 +16,28 @@
           </ul>
           <div class="resources">
             <div class="money">
-              M: {{ gameController.game.money | roundDown | number: 0}}
+              <span class="money-icon">
+                M:
+              </span>
+              {{ gameController.game.money | roundDown | number: 0}}
               <span class="income">
                 ({{ gameController.game.moneyPerSecond | number:1 }}/s)
               </span>
             </div>
             <div class="exporation">
-              E: {{ gameController.game.exploration | roundDown | number: 0}}
+              <span class="exploration-icon">
+                E:
+              </span>
+              {{ gameController.game.exploration | roundDown | number: 0}}
               <span class="income">
                 ({{ gameController.game.explorationPerSecond | number:1 }}/s)
               </span>
             </div>
             <div class="score">
-              A: {{ gameController.game.achievementScore | number: 0 }}
+              <span class="achievement-icon">
+                A:
+              </span>
+              {{ gameController.game.achievementScore | number: 0 }}
             </div>
           </div>
         </div>

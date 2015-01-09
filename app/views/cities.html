@@ -5,9 +5,9 @@
         <tr class="city-list-header">
           <th class="name">City</th>
           <th class="population">Population</th>
-          <th class="money-delta">Profit</th>
-          <th class="exploration-delta">Exploration</th>
           <th class="buildings">Buildings</th>
+          <th class="money-delta"><span class="money-icon">Profit</span></th>
+          <th class="exploration-delta"><span class="exploration-icon">Exploration</span></th>
           <th class="actions"></th>
         </tr>
       </thead>
@@ -18,9 +18,9 @@
             <span ng-if="city.isCapitol()">(C)</span>
           </td>
           <td class="population">{{ city.population | number:0 }}</td>
+          <td class="buildings">{{ city.totalBuildings() }}</td>
           <td class="money-delta">{{ city.moneyPerSecond | number:1 }}/s</td>
           <td class="exploration-delta">{{ city.explorationPerSecond | number:1 }}/s</td>
-          <td class="buildings">{{ city.totalBuildings() }}</td>
           <td class="actions"><a class="btn btn-info">View</a></td>
         </tr>
       </tbody>

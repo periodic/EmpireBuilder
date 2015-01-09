@@ -20,7 +20,8 @@ Build City
           </span>
         </td>
         <td class="actions">
-          <a class="btn btn-info" ng-click="buildCityController.buildCity($index)">
+          <a class="btn btn-primary" ng-click="buildCityController.buildCity($index)"
+            ng-class="buildCityController.canBuild() || 'disabled'">
             Build City ({{ buildCityController.buildCost() }})</a>
         </td>
       </tr>
@@ -29,6 +30,9 @@ Build City
 </div>
 
 <div>
-  <a class="btn btn-primary" ng-click="buildCityController.explore()">Explore ({{ buildCityController.exploreCost() | roundUp }})</a>
+  <a class="btn btn-primary" ng-click="buildCityController.explore()"
+    ng-class="buildCityController.canExplore() || 'disabled'">
+    Explore ({{ buildCityController.exploreCost() | roundUp }})
+  </a>
 </div>
 

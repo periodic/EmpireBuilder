@@ -77,35 +77,32 @@ table.building-list tr {
   font-size: 140%;
 }
 
-/*
-.city, .city-list-header,
-.building, .building-list-header {
-  display: flex;
+.money-icon {
+  display: inline-block;
+  width: 16px;
+  height: 0px;
+  background-size: 16px 16px;
+  padding-top: 16px;
+  overflow: hidden;
+  background-image: url("../images/money-64x64.png");
 }
 
-.city-list-header,
-.building-list-header {
-  font-weight: bold;
+.exploration-icon {
+  display: inline-block;
+  width: 16px;
+  height: 0px;
+  background-size: 16px 16px;
+  padding-top: 16px;
+  overflow: hidden;
+  background-image: url("../images/exploration-64x64.png");
 }
 
-.city .name, .building .name {
-  font-size: 120%;
+.achievement-icon {
+  display: inline-block;
+  width: 16px;
+  height: 0px;
+  background-size: 16px 16px;
+  padding-top: 16px;
+  overflow: hidden;
+  background-image: url("../images/star-64x64.png");
 }
-
-.city .name, .city-list-header .name,
-.building .name, .building-list-header .name {
-  width: 150px;
-}
-
-.city .money-delta,
-.city .buildings,
-.city-list-header .money-delta,
-.city-list-header .buildings,
-.building .count,
-.building .cost,
-.building-list-header .count,
-.building-list-header .cost {
-  width: 100px;
-}
-*/
-
