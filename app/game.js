@@ -482,7 +482,11 @@ define(['data/constants'], function (Constants) {
   };
 
   City.prototype.hasModifier = function (modifierId) {
-    this.site.hasModifier(modifierId);
+    return this.site.hasModifier(modifierId);
+  };
+
+  City.prototype.isCapitol = function () {
+    return this.hasModifier("capitol");
   };
 
   City.prototype.foodRequired = function () {

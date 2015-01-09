@@ -4,7 +4,7 @@
       <thead>
         <tr class="city-list-header">
           <th class="name">City</th>
-          <th class="name">Population</th>
+          <th class="population">Population</th>
           <th class="money-delta">Profit</th>
           <th class="exploration-delta">Exploration</th>
           <th class="buildings">Buildings</th>
@@ -13,8 +13,11 @@
       </thead>
       <tbody>
         <tr ng-repeat="city in gameController.game.cities" ng-click="$emit('select-city', $index)">
-          <td class="name">{{ city.name }}</td>
-          <td class="food">{{ city.population | number:0 }}</td>
+          <td class="name">
+            {{ city.name }}
+            <span ng-if="city.isCapitol()">(C)</span>
+          </td>
+          <td class="population">{{ city.population | number:0 }}</td>
           <td class="money-delta">{{ city.moneyPerSecond | number:1 }}/s</td>
           <td class="exploration-delta">{{ city.explorationPerSecond | number:1 }}/s</td>
           <td class="buildings">{{ city.totalBuildings() }}</td>
