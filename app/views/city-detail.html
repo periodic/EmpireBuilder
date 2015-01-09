@@ -1,6 +1,16 @@
 <div class="city-detail">
-  <h3 class="city-name">{{ cityController.city.name }}</h3>
-  <p class="city-distance-penalty">Distance: {{ cityController.city.distance | number:0 }}</p>
+  <h3 class="name">{{ cityController.city.name }}</h3>
+  <p class="distance-penalty">Distance: {{ cityController.city.distance | number:0 }}</p>
+  <p class="population">Population: {{ cityController.city.population }}</p>
+  <p class="food">
+  Food: {{ cityController.city.food | number:0 }} /
+    {{ cityController.city.foodRequired() | roundUp | number:0}}
+    (+{{ cityController.city.foodPerSecond | number:1 }})
+  </p>
+  <p class="unemployed">
+    Unemployed:
+    {{ cityController.city.population - cityController.city.totalWorking() }}
+  </p>
 
   <div class="modifiers" ng-if="cityController.hasModifiers()">
     <table class="table modifier-list">
@@ -25,24 +35,35 @@
     <thead>
       <tr class="building-list-header">
         <th class="name">Building</th>
-        <th class="count">Built</th>
         <th class="cost">Cost</th>
+        <th class="count">Built</th>
+        <th class="workers">Working</th>
+        <!--
         <th class="money-delta">Profit</th>
         <th class="money-delta">Profit/Bldg</th>
+        -->
         <th class="description">Description</th>
         <th class="actions"></th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="building in cityController.getBuildings()"
-          ng-click="cityController.purchase(building.id)">
+      <tr ng-repeat="building in cityController.getBuildings()">
         <td class="name">{{ building.name }}</td>
-        <td class="count">{{ cityController.getBuildingCount(building.id) | number:0 }}</td>
         <td class="cost">{{ cityController.getBuildingCost(building.id) | roundUp | number:0 }}</td>
+        <td class="count">{{ cityController.getBuildingCount(building.id) | number:0 }}</td>
+        <td class="workers">
+          {{ cityController.getNumWorkers(building.id) | number:0 }}
+          <a ng-click="cityController.city.addWorker(building.id)">+</a>
+          <a ng-click="cityController.city.removeWorker(building.id)">-</a>
+        </td>
+        <!--
         <td class="money-delta">{{ cityController.getBuildingProfit(building.id) | number:1 }}</td>
         <td class="money-delta">{{ cityController.getProfitPerBuilding(building.id) | number:1 }}</td>
+        -->
         <td class="description">{{ building.description }}</td>
-        <td class="actions"><a class="btn btn-primary">Buy</a></td>
+        <td class="actions">
+          <a class="btn btn-primary" ng-click="cityController.purchase(building.id)">Buy</a>
+        </td>
       </tr>
     </tbody>
   </table>

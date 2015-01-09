@@ -16,20 +16,34 @@ define([], function () {
     { // Capitol has strength 1.0 * num_cities
       id: 'capitol',
       name: "The Capitol",
-      moneyMultiplier: 0.1, // 10% / city
-      moneyBonus: 1.0, // 1 money / second / city
-      explorationMultiplier: 0.1, // 10% / city
-      explorationBonus: 1.0 // 1 exploration / second / city
+      moneyMultiplier: 0.01,        // 1% / city
+      moneyBonus: 1.0,              // 1 money / second / city
+      explorationMultiplier: 0.01,  // 1% / city
+      explorationBonus: 1.0,        // 1 exploration / second / city
+      foodMultiplier: 0.01,         // 1% / city
+      foodBonus: 1.0,               // 1 food / second / city
     },
     {
-      id: 'money1',
-      name: "money Bonus",
+      id: 'money',
+      name: "Money Bonus",
       moneyMultiplier: 1.0,
+    },
+    {
+      id: 'exploration',
+      name: "Exploration Bonus",
+      explorationMultiplier: 1.0,
+    },
+    {
+      id: 'food',
+      name: "Food Bonus",
+      foodMultiplier: 1.0,
     },
   ];
 
   var randomModifiers = [
-    'money1',
+    'money',
+    'exploration',
+    'food',
   ];
 
   var names = [

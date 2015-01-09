@@ -31,12 +31,13 @@ define([
     updateDelay: 100, // ms
     saveDelay: 1000, // ms
     baseCityCost: 10,
-    initialMoney: 25,
+    initialMoney: 100000, // 25,
     baseDistance: 100,
     distanceFudgeFactor: 0.1,
     baseModifierChance: 0.5,
     baseModifierStrength: 0.10,
     baseExplorationCost: 100,
+    baseFoodRequirement: 100,
 
     growthFactors: {
       building: 1.2,
@@ -44,6 +45,7 @@ define([
       upgrade: 1.5,
       distance: 1.2,
       exploration: 1.5,
+      food: 1.3,
     },
   };
 });

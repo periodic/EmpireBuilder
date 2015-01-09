@@ -60,6 +60,10 @@ define(['angular', 'data/constants'], function (_, Constants) {
     return this.game.buildingProfit(buildingId, this.cityId, 1);
   };
 
+  CityController.prototype.getNumWorkers = function(buildingId) {
+    return this.city.numWorkers(buildingId);
+  };
+
   CityController.prototype.purchase = function (buildingId) {
     this.game.purchaseBuilding(this.cityId, buildingId);
   };
