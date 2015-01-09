@@ -15,7 +15,7 @@
         <tr ng-repeat="city in gameController.game.cities" ng-click="$emit('select-city', $index)">
           <td class="name">
             {{ city.name }}
-            <span ng-if="city.isCapitol()">(C)</span>
+            <span ng-if="city.isCapitol()">&#x2605;</span>
           </td>
           <td class="population">{{ city.population | number:0 }}</td>
           <td class="buildings">{{ city.totalBuildings() }}</td>
