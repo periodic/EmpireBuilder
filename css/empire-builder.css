@@ -39,7 +39,7 @@ ul.menu {
 }
 
 table .name {
-  width: 200px;
+  min-width: 200px;
 }
 
 td.name {
@@ -53,12 +53,16 @@ table .money-delta {
   width: 100px;
 }
 
-table tbody tr.selected {
-  background-color: #d9edf7
+table.achievements-list > tbody > tr > td,
+table.building-list > tbody > tr > td,
+table.city-list > tbody > tr > td,
+table.city-site-list > tbody > tr > td,
+table.upgrades-available > tbody > tr > td {
+  vertical-align: middle;
 }
 
-table tbody tr:hover {
-  background-color: #d9edf7
+table .progress {
+  margin-bottom: 0;
 }
 
 .name,
@@ -105,6 +109,7 @@ table tbody tr:hover {
   transition-property: opacity, visibility;
   transition-duration: 0.4s, 0.4s;
   transition-timing-function: ease, ease;
+  transition-delay: 0; /* immediate disappear. */
   color: #000000;
   background: white;
   border: 1px solid #333333;
@@ -116,5 +121,17 @@ table tbody tr:hover {
     visibility: visible;
     overflow: visible;
     display: inline;
+    transition-delay: 0.5s; /* delay the hover. */
 }
 
+.progress {
+  position: relative; /* To bound absolute children. */
+}
+
+.progress-bar-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  text-shadow: 0 0 3px #f5f5f5;
+  font-size: 90%;
+}

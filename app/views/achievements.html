@@ -1,34 +1,41 @@
 <h2>Achievements</h2>
 
 <div class="achievements">
-  <table class="achievements table">
+  <table class="achievements-list table">
     <thead>
       <tr>
-        <th class="check"></th>
         <th class="name">Achievement</th>
-        <th class="points">&#xe99e;</th>
+        <th class="check" simple-tooltip="Your progress towards completing this achievement.">
+          Progress
+        </th>
+        <th class="points" simple-tooltip="The number of achievement points you will earn when you complete this achievement.">
+          &#xe99e;
+        </th>
         <th class="description">Description</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="achievement in achievementsController.game.achievementsAcquired">
-        <td class="check">&#xea10;</td>
         <td class="name">{{ achievement.name }}</td>
+        <td class="check">&#xea10;</td>
         <td class="points">{{ achievement.points | number:0 }}</td>
         <td class="description">{{ achievement.description }}</td>
       </tr>
     </tbody>
     <tbody>
       <tr ng-repeat="achievement in achievementsController.game.achievementsAvailable">
+        <td class="name">{{ achievement.name }}</td>
         <td class="check">
-          <div class="progress" simple-tooltip="{{achievementsController.getMetric(achievement) }}/{{ achievement.goal }}">
+          <div class="progress" simple-tooltip="">
             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
               aria-valuemax="100"
               style="width: {{ 100 * achievementsController.getMetric(achievement) / achievement.goal }}%;">
             </div>
+            <div class="progress-bar-text">
+              {{achievementsController.getMetric(achievement) }}/{{ achievement.goal }}
+            </div>
           </div>
         </td>
-        <td class="name">{{ achievement.name }}</td>
         <td class="points">{{ achievement.points | number:0 }}</td>
         <td class="description">
           {{ achievement.description }}
