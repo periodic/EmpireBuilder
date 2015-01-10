@@ -95,7 +95,6 @@ define(['data/constants'], function (Constants) {
       var site = this.sites.splice(siteIndex, 1)[0];
       this.money = this.money - cost;
       this.buildCity(site);
-      this.updateCapitolStrength();
       return this.cities.length - 1;
     }
     return -1;
@@ -145,7 +144,7 @@ define(['data/constants'], function (Constants) {
     city.name = this.generateCityName();
     city.site = site;
     this.cities.push(city);
-
+    this.updateCapitolStrength();
     this.checkAchievements();
   };
 
