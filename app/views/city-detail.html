@@ -1,21 +1,21 @@
 <div class="city-detail">
   <h3 class="name">{{ cityController.city.name }}</h3>
   <div class="metrics">
-    <p class="distance-penalty">
+    <p class="distance-penalty" simple-tooltip="The city's distance from the capitol.  The farther a building is from the city the more buildings will cost.">
       <icon-distance></icon-distance>
       {{ cityController.city.distance | number:0 }}
     </p>
-    <p class="population">
+    <p class="population" simple-tooltip="The number of citizens in this city.  Citizens can work at buildings to improve their output.">
       <icon-population></icon-population>
       {{ cityController.city.population }}
     </p>
-    <p class="food">
+    <p class="food" simple-tooltip="The food stores of the city.  The city must store a certain amount of excess food before it will grow.">
       <icon-food></icon-food>
       {{ cityController.city.food | number:0 }} /
       {{ cityController.city.foodRequired() | roundUp | number:0}}
       (+{{ cityController.city.foodPerSecond | number:1 }})
     </p>
-    <p class="unemployed">
+    <p class="unemployed" simple-tooltip="The unemployed citizens of your city.  Assign unemployed citizens to jobs below.">
       <icon-unemployed></icon-unemployed>
       {{ cityController.city.population - cityController.city.totalWorking() }}
     </p>
@@ -25,8 +25,8 @@
     <table class="table modifier-list">
       <thead>
         <tr class="modifier-list-header">
-          <th>Modifier</th>
-          <th>Strength</th>
+          <th simple-tooltip="The name of the modifier.">Modifier</th>
+          <th simple-tooltip="A measure of how large a bonus this modifier provides.">Strength</th>
           <th>Description</th>
         </tr>
       </thead>
@@ -44,8 +44,8 @@
     <thead>
       <tr class="building-list-header">
         <th class="name">Building</th>
-        <th class="count"><icon-buildings></icon-buildings></th>
-        <th class="workers"><icon-workers></icon-workers></th>
+        <th class="count" simple-tooltip="The number of buildings built."><icon-buildings></icon-buildings></th>
+        <th class="workers" simple-tooltip="The number of citizens working at this building."><icon-workers></icon-workers></th>
         <th class="description">Description</th>
         <th class="actions"></th>
       </tr>

@@ -16,21 +16,21 @@
             <li ng-click="gameController.onShowSettings()">Settings</li>
           </ul>
           <div class="resources">
-            <div class="money">
+            <div class="money" simple-tooltip="The amount of money in your coffers. This can be used to found cities and build buildings.">
               <icon-money></icon-money>
               {{ gameController.game.money | roundDown | number: 0}}
               <span class="income">
                 ({{ gameController.game.moneyPerSecond | number:1 }}/s)
               </span>
             </div>
-            <div class="exporation">
+            <div class="exporation" simple-tooltip="The accumulated exploration of your nation.  This can be spent to find potential city sites.">
               <icon-exploration></icon-exploration>
               {{ gameController.game.exploration | roundDown | number: 0}}
               <span class="income">
                 ({{ gameController.game.explorationPerSecond | number:1 }}/s)
               </span>
             </div>
-            <div class="score">
+            <div class="score" simple-tooltip="Your achievement score.  These points can be spent to buy nation-wide upgrades.">
               <icon-score></icon-score>
               {{ gameController.game.achievementScore | number: 0 }}
             </div>
