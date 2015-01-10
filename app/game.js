@@ -31,6 +31,7 @@ define(['data/constants'], function (Constants) {
     this.money = Constants.initialMoney;
     this.exploration = 0;
     this.nextExplorationCost = Constants.baseExplorationCost;
+    this.nextExplorationDistance = Constants.baseExplorationDistance;
 
     this.upgradesPurchased_ = {}; // upgradeId -> count
 
@@ -104,32 +105,30 @@ define(['data/constants'], function (Constants) {
     if (this.exploration >= this.nextExplorationCost) {
       this.sites.push(this.buildSite());
       this.exploration = this.exploration - this.nextExplorationCost;
-      this.nextExplorationCost = this.nextExplorationCost * Constants.growthFactors.exploration;
+      this.nextExplorationCost = this.nextExplorationCost * Constants.growthFactors.explorationCost;
+      this.nextExplorationDistance = this.nextExplorationDistance * 
+          Constants.growthFactors.explorationDistance;
     }
   };
 
   Game.prototype.buildSite = function () {
     var site = new Site();
 
-    // d = base * (growth^cities - 1)
-    site.distance = Constants.baseDistance *
-        (Math.pow(Constants.growthFactors.distance, this.cities.length) - 1);
     // d = d * (1 ± fudge)
-    site.distance = site.distance *
+    site.distance = this.nextExplorationDistance *
         ((Math.random() * 2 - 1) * Constants.distanceFudgeFactor + 1);
-    site.distanceCostModifier = site.distance / Constants.baseDistance + 1;
 
     // Allocate a random amount of mod strength, then use the same formula to
     // create mods.  As long as they remain under the total strength we
     // allocate.
-    var totalModStrength = Math.random() * Constants.baseModifierStrength * site.distanceCostModifier;
+    var totalModStrength = Math.random() * Constants.baseModifierStrength * site.distanceCostMultiplier();
     while (totalModStrength > 0) {
       var modifierIndex = Math.floor(Math.random() * Constants.cityRandomModifiers.length);
       var modifierId = Constants.cityRandomModifiers[modifierIndex];
 
       var strength = Math.random() *
                      Constants.baseModifierStrength *
-                     site.distanceCostModifier;
+                     site.distanceCostMultiplier();
       if (strength <= totalModStrength) {
         site.addModifier(modifierId, strength);
       }
@@ -332,6 +331,7 @@ define(['data/constants'], function (Constants) {
       money: this.money,
       exploration: this.exploration,
       nextExplorationCost: this.nextExplorationCost,
+      nextExplorationDistance: this.nextExplorationDistance,
       upgrades: this.upgradesPurchased_,
       achievements: achievements,
       achievementScore: this.achievementScore,
@@ -344,6 +344,7 @@ define(['data/constants'], function (Constants) {
     this.money = state.money || 0;
     this.exploration = state.exploration || 0;
     this.nextExplorationCost = state.nextExplorationCost || 0;
+    this.nextExplorationDistance = state.nextExplorationDistance || 0;
 
     this.buildingsById_ = {};
     this.buildings_ = [];
@@ -412,16 +413,12 @@ define(['data/constants'], function (Constants) {
     this.food = 0;
     this.population = 1;
 
-    this.distanceCostModifier = 1.0;
-
     this.buildings = {}; // buildingId -> count
     this.workers = {}; // buildingId -> count
 
     this.site = new Site();
 
     // Dynamic properties.
-    this.costMultiplier = 1.0;
-
     this.moneyPerSecond = 0;
     this.explorationPerSecond = 0;
     this.foodPerSecond = 0;
@@ -430,7 +427,6 @@ define(['data/constants'], function (Constants) {
   Object.defineProperties(City.prototype, {
     costMultiplier: { get: function () { return this.site.costMultiplier; }, },
     distance: { get: function () { return this.site.distance; }, },
-    distanceCostModifier: { get: function () { return this.site.distanceCostModifier; }, },
     moneyBonus: { get: function () { return this.site.moneyBonus; }, },
     moneyMultiplier: { get: function () { return this.site.moneyMultiplier; }, },
     explorationBonus: { get: function () { return this.site.explorationBonus; }, },
@@ -524,7 +520,6 @@ define(['data/constants'], function (Constants) {
       name: this.name,
       population: this.population,
       food: this.food,
-      distanceCostModifier: this.distanceCostModifier,
       workers: this.workers,
       buildings: this.buildings,
       site: this.site.getState(),
@@ -537,8 +532,6 @@ define(['data/constants'], function (Constants) {
     this.population = state.population;
     this.food = state.food;
 
-    this.distanceCostModifier = state.distanceCostModifier;
-
     this.buildings = state.buildings;
     this.workers = state.workers;
 
@@ -548,7 +541,6 @@ define(['data/constants'], function (Constants) {
 
   function Site() {
     this.distance = 0;
-    this.distanceCostModifier = 1.0;
     this.modifiers = [];
 
     // Dynamic properties.
@@ -566,12 +558,16 @@ define(['data/constants'], function (Constants) {
     this.calculateModifiers();
   };
 
+  Site.prototype.distanceCostMultiplier = function () {
+    return this.distance / Constants.baseDistance + 1;
+  };
+
   Site.prototype.calculateModifiers = function () {
     this.moneyBonus = 0;
     this.explorationBonus = 0;
     this.foodBonus = 0;
 
-    this.costMultiplier = this.distanceCostModifier;
+    this.costMultiplier = this.distanceCostMultiplier();
     this.moneyMultiplier = 1.0;
     this.explorationMultiplier = 1.0;
     this.foodMultiplier = 1.0;
@@ -583,17 +579,13 @@ define(['data/constants'], function (Constants) {
         return;
       }
       this.costMultiplier = this.costMultiplier *
-          modifierInfo.strength *
-          (modifier.costMultiplier || 0) + 1;
+          (modifierInfo.strength * (modifier.costMultiplier || 0) + 1);
       this.moneyMultiplier = this.moneyMultiplier *
-          modifierInfo.strength *
-          (modifier.moneyMultiplier || 0) + 1;
+          (modifierInfo.strength * (modifier.moneyMultiplier || 0) + 1);
       this.explorationMultiplier = this.explorationMultiplier *
-          modifierInfo.strength *
-          (modifier.explorationMultiplier || 0) + 1;
+          (modifierInfo.strength * (modifier.explorationMultiplier || 0) + 1);
       this.foodMultiplier = this.foodMultiplier *
-          modifierInfo.strength *
-          (modifier.foodMultiplier || 0) + 1;
+          (modifierInfo.strength * (modifier.foodMultiplier || 0) + 1);
 
       this.moneyBonus = this.moneyBonus + (modifier.moneyBonus || 0) * modifierInfo.strength;
       this.explorationBonus = this.explorationBonus + (modifier.explorationBonus || 0) *
@@ -632,14 +624,12 @@ define(['data/constants'], function (Constants) {
   Site.prototype.getState = function () {
     return {
       distance: this.distance,
-      distanceCostModifier: this.distanceCostModifier,
       modifiers: this.modifiers,
     };
   };
 
   Site.prototype.setState = function (state) {
     this.distance = state.distance;
-    this.distanceCostModifier = state.distanceCostModifier;
     this.modifiers = state.modifiers;
 
     this.calculateModifiers();

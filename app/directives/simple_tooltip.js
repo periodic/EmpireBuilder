@@ -5,10 +5,13 @@ define(['angular'], function (_) {
   m.directive('simpleTooltip', function () {
     return {
       restrict: "A",
+      scope: {
+        simpleTooltip: '@',
+      },
       link: function (scope, element, attrs) {
         var tooltipData = angular.element("<div>")
           .addClass('tooltip-info')
-          .text(attrs.simpleTooltip);
+          .text(scope.simpleTooltip);
         element.addClass("tooltip-target")
           .append(tooltipData);
 

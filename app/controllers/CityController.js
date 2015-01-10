@@ -72,6 +72,10 @@ define(['angular', 'data/constants'], function (_, Constants) {
     return this.getBuildingCost(buildingId) < this.game.money;
   };
 
+  CityController.prototype.distanceCostMultiplierAsPercent = function () {
+    return this.city.site.distanceCostMultiplier() * 100 - 100;
+  };
+
   var m = angular.module('EB.Controllers.CityController', []);
   m.controller('CityController', CityController);
 });
