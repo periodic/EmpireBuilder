@@ -1,7 +1,7 @@
 <div class="city-detail">
   <h3 class="name">{{ cityController.city.name }}</h3>
   <div class="metrics">
-    <p class="distance-penalty" simple-tooltip="The city's distance from the capitol.  The farther a building is from the city the more buildings will cost.">
+    <p class="distance-penalty" simple-tooltip="The city's distance from the capitol.  The farther a building is from the city the more buildings will cost.  Increases all building costs by {{ cityController.distanceCostMultiplierAsPercent() | number:0 }}%">
       <icon-distance></icon-distance>
       {{ cityController.city.distance | number:0 }}
     </p>
