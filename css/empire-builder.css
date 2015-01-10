@@ -43,19 +43,8 @@ ul.menu {
   margin-top: 20px;
 }
 
-table .name {
-  min-width: 200px;
-}
-
 td.name {
   font-size: 120%;
-}
-
-table .cost,
-table .count,
-table .purchased,
-table .money-delta {
-  width: 100px;
 }
 
 table.achievements-list > tbody > tr > td,
@@ -68,6 +57,14 @@ table.upgrades-available > tbody > tr > td {
 
 table .progress {
   margin-bottom: 0;
+}
+
+table.city-list {
+  cursor: pointer;
+}
+
+table.city-list tbody tr:hover {
+  background-color: #d9edf7;
 }
 
 .name,

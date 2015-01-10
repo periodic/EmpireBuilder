@@ -15,6 +15,9 @@ define(['angular'], function (_) {
         element.addClass("tooltip-target")
           .append(tooltipData);
 
+        attrs.$observe('simpleTooltip', function (value) {
+          tooltipData.text(value);
+        });
       },
     };
   });
