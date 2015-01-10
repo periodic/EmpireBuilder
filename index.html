@@ -17,21 +17,21 @@
           </ul>
           <div class="resources">
             <div class="money">
-              &#xe93b;
+              <icon-money></icon-money>
               {{ gameController.game.money | roundDown | number: 0}}
               <span class="income">
                 ({{ gameController.game.moneyPerSecond | number:1 }}/s)
               </span>
             </div>
             <div class="exporation">
-              &#xe947;
+              <icon-exploration></icon-exploration>
               {{ gameController.game.exploration | roundDown | number: 0}}
               <span class="income">
                 ({{ gameController.game.explorationPerSecond | number:1 }}/s)
               </span>
             </div>
             <div class="score">
-              &#xe99e;
+              <icon-score></icon-score>
               {{ gameController.game.achievementScore | number: 0 }}
             </div>
           </div>

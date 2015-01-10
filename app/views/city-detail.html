@@ -1,15 +1,22 @@
 <div class="city-detail">
   <h3 class="name">{{ cityController.city.name }}</h3>
   <div class="metrics">
-    <p class="distance-penalty">&#xe949; {{ cityController.city.distance | number:0 }}</p>
-    <p class="population">&#xe972; {{ cityController.city.population }}</p>
+    <p class="distance-penalty">
+      <icon-distance></icon-distance>
+      {{ cityController.city.distance | number:0 }}
+    </p>
+    <p class="population">
+      <icon-population></icon-population>
+      {{ cityController.city.population }}
+    </p>
     <p class="food">
-    &#xe9a4; {{ cityController.city.food | number:0 }} /
+      <icon-food></icon-food>
+      {{ cityController.city.food | number:0 }} /
       {{ cityController.city.foodRequired() | roundUp | number:0}}
       (+{{ cityController.city.foodPerSecond | number:1 }})
     </p>
     <p class="unemployed">
-      Unemployed:
+      <icon-unemployed></icon-unemployed>
       {{ cityController.city.population - cityController.city.totalWorking() }}
     </p>
   </div>
@@ -37,8 +44,8 @@
     <thead>
       <tr class="building-list-header">
         <th class="name">Building</th>
-        <th class="count">&#xe901;</th>
-        <th class="workers">&#xe971;</th>
+        <th class="count"><icon-buildings></icon-buildings></th>
+        <th class="workers"><icon-workers></icon-workers></th>
         <th class="description">Description</th>
         <th class="actions"></th>
       </tr>
@@ -48,15 +55,19 @@
         <td class="name">{{ building.name }}</td>
         <td class="count">{{ cityController.getBuildingCount(building.id) | number:0 }}</td>
         <td class="workers">
-          <a ng-click="cityController.city.addWorker(building.id)">&#xea0a;</a>
+          <a ng-click="cityController.city.addWorker(building.id)">
+            <icon-add-worker></icon-add-worker>
+          </a>
           {{ cityController.getNumWorkers(building.id) | number:0 }}
-          <a ng-click="cityController.city.removeWorker(building.id)">&#xea0b;</a>
+          <a ng-click="cityController.city.removeWorker(building.id)">
+            <icon-remove-worker></icon-remove-worker>
+          </a>
         </td>
         <td class="description">{{ building.description }}</td>
         <td class="actions">
           <a class="btn btn-primary btn-buy" ng-click="cityController.purchase(building.id)"
             ng-class="cityController.canPurchase(building.id) || 'disabled'">
-            Buy {{ cityController.getBuildingCost(building.id) | roundUp | number:0 }}&#xe93b;
+            Buy {{ cityController.getBuildingCost(building.id) | roundUp | number:0 }}<icon-money></icon-money>
           </a>
         </td>
       </tr>

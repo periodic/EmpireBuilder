@@ -17,7 +17,7 @@
     <tbody>
       <tr ng-repeat="achievement in achievementsController.game.achievementsAcquired">
         <td class="name">{{ achievement.name }}</td>
-        <td class="check">&#xea10;</td>
+        <td class="check"><icon-achievement-met></icon-achievement-met></td>
         <td class="points">{{ achievement.points | number:0 }}</td>
         <td class="description">{{ achievement.description }}</td>
       </tr>

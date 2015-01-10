@@ -6,22 +6,24 @@
       <thead>
         <tr class="city-list-header">
           <th class="name">City</th>
-          <th class="population">&#xe972;</th>
-          <th class="buildings">&#xe901;</th>
-          <th class="money-delta">&#xe93b;</th>
-          <th class="exploration-delta">&#xe947;</th>
+          <th class="population"><icon-population></icon-population></th>
+          <th class="buildings"><icon-buildings></icon-buildings></th>
+          <th class="money-delta"><icon-money></icon-money></th>
+          <th class="exploration-delta"><icon-exploration></icon-exploration></th>
+          <th class="unemployed"><icon-unemployed></icon-unemployed></th>
           <th class="actions"></th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="city in gameController.game.cities">
           <td class="name">
-            {{ city.name }}<span ng-if="city.isCapitol()">&#xe921;</span>
+            {{ city.name }}<span ng-if="city.isCapitol()"><icon-capitol></icon-capitol></span>
           </td>
           <td class="population">{{ city.population | number:0 }}</td>
           <td class="buildings">{{ city.totalBuildings() }}</td>
           <td class="money-delta">{{ city.moneyPerSecond | number:1 }}/s</td>
           <td class="exploration-delta">{{ city.explorationPerSecond | number:1 }}/s</td>
+          <td class="unemployed">{{ city.numUnemployed() | number:0 }}</td>
           <td class="actions">
             <a class="btn btn-info" ng-click="gameController.selectCity($index)">View</a>
           </td>

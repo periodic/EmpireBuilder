@@ -31,6 +31,11 @@ ul.menu {
   flex-grow: 1;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.resources > div {
+  white-space: nowrap;
 }
 
 .city-list {
@@ -73,6 +78,16 @@ table .progress {
 
 .count, .cost, .workers, .points {
   text-align: center;
+}
+
+.workers a {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-decoration: none;
 }
 
 .upgrade-header {

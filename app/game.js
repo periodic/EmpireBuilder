@@ -292,11 +292,11 @@ define(['data/constants'], function (Constants) {
       return;
     }
 
-    if (this.money < cost) {
+    if (this.achievementScore < cost) {
       return;
     }
 
-    this.money = this.money - cost;
+    this.achievementScore = this.achievementScore - cost;
     this.upgradesPurchased_[upgradeId] = alreadyPurchased + 1;
 
     upgrade.onPurchase(this);
@@ -464,6 +464,10 @@ define(['data/constants'], function (Constants) {
     return sum;
   };
 
+  City.prototype.numUnemployed = function (buildingId) {
+    return this.population - this.totalWorking();
+  };
+
   City.prototype.addBuilding = function (buildingId) {
     var count = this.buildings[buildingId] || 0;
     this.buildings[buildingId] = count + 1;
@@ -471,10 +475,6 @@ define(['data/constants'], function (Constants) {
     if (this.totalWorking() < this.population) {
       this.addWorker(buildingId);
     }
-  };
-
-  City.prototype.numWorkers = function (buildingId) {
-    return this.workers[buildingId] || 0;
   };
 
   City.prototype.getModifiers = function () {

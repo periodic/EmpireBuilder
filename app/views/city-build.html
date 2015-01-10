@@ -4,7 +4,7 @@
   <table class='city-site-list table'>
     <thead>
       <tr class="city-site-list-header">
-        <th class="distance">&#xe949;</th>
+        <th class="distance"><icon-distance></icon-distance></th>
         <th class="modifiers">Modifiers</th>
         <th class="actions"></th>
       </tr>
@@ -20,7 +20,7 @@
         <td class="actions">
           <a class="btn btn-primary" ng-click="buildCityController.buildCity($index)"
             ng-class="buildCityController.canBuild() || 'disabled'">
-            Build City {{ buildCityController.buildCost() }}&#xe93b;</a>
+            Build City {{ buildCityController.buildCost() }}<icon-money></icon-money></a>
         </td>
       </tr>
     </tbody>
@@ -30,7 +30,7 @@
 <div>
   <a class="btn btn-primary" ng-click="buildCityController.explore()"
     ng-class="buildCityController.canExplore() || 'disabled'">
-    Explore {{ buildCityController.exploreCost() | roundUp }}&#xe947;
+    Explore {{ buildCityController.exploreCost() | roundUp }}<icon-exploration></icon-exploration>
   </a>
 </div>
 

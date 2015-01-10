@@ -42,7 +42,7 @@ define([
     growthFactors: {
       building: 1.2,
       cityCost: 2.0,
-      upgrade: 1.5,
+      upgrade: 2.0,
       distance: 1.2,
       exploration: 1.5,
       food: 1.3,

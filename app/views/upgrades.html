@@ -17,7 +17,7 @@
           <td class="actions">
             <a class="btn btn-primary btn-buy" ng-click="upgradesController.purchase(upgrade.id)">
               Buy
-              {{ upgradesController.game.upgradeCost(upgrade.id) | roundUp | number:0 }}&#xe99e;
+              {{ upgradesController.game.upgradeCost(upgrade.id) | roundUp | number:0 }}<icon-score></icon-score>
             </a>
           </td>
         </tr>
