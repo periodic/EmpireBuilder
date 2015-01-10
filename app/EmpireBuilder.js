@@ -49,4 +49,9 @@ define([
         controller: 'SettingsController',
       })
     });
+
+  function getGame() {
+    return angular.element(document.body).injector().get("game");
+  }
+  window.getGame = getGame;
 });
