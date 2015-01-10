@@ -1,3 +1,7 @@
+body {
+  font-family: icons, sans-serif;
+}
+
 #status-bar {
   border-bottom: 1px solid #ddd;
   display: flex;
@@ -29,15 +33,6 @@ ul.menu {
   justify-content: space-between;
 }
 
-#side-panel {
-  border-right: 1px solid #ddd;
-}
-
-#main-panel {
-  border-left: 1px solid #ddd;
-  margin-left: -1px;
-}
-
 .city-list {
   margin-bottom: 20px;
   margin-top: 20px;
@@ -66,10 +61,14 @@ table tbody tr:hover {
   background-color: #d9edf7
 }
 
-table.city-list tr,
-table.upgrades-available tr,
-table.building-list tr {
-  cursor: pointer;
+.name,
+.cost,
+.workers {
+  white-space: nowrap;
+}
+
+.count, .cost, .workers, .points {
+  text-align: center;
 }
 
 .upgrade-header {
@@ -77,32 +76,45 @@ table.building-list tr {
   font-size: 140%;
 }
 
-.money-icon {
-  display: inline-block;
-  width: 16px;
-  height: 0px;
-  background-size: 16px 16px;
-  padding-top: 16px;
-  overflow: hidden;
-  background-image: url("../images/money-64x64.png");
+.city-detail .metrics {
+  display: flex;
+  justify-content: space-between;
 }
 
-.exploration-icon {
-  display: inline-block;
-  width: 16px;
-  height: 0px;
-  background-size: 16px 16px;
-  padding-top: 16px;
-  overflow: hidden;
-  background-image: url("../images/exploration-64x64.png");
+.btn-buy {
+  width: 100%;
 }
 
-.achievement-icon {
-  display: inline-block;
-  width: 16px;
-  height: 0px;
-  background-size: 16px 16px;
-  padding-top: 16px;
-  overflow: hidden;
-  background-image: url("../images/star-64x64.png");
+.achievements .check {
+  width: 100px;
 }
+
+.tooltip-target > .tooltip-info {
+  max-width: 300px;
+  padding: 5px 10px;
+  margin-top: 5px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
+  position: absolute;
+  font-family: Arial;
+  font-size: 12px;
+  font-style: normal;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px #999;
+  transition-property: opacity, visibility;
+  transition-duration: 0.4s, 0.4s;
+  transition-timing-function: ease, ease;
+  color: #000000;
+  background: white;
+  border: 1px solid #333333;
+}
+
+.tooltip-target:hover > .tooltip-info {
+    opacity: 1;
+    text-decoration: none;
+    visibility: visible;
+    overflow: visible;
+    display: inline;
+}
+

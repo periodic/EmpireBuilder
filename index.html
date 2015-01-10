@@ -3,6 +3,7 @@
     <title>Empire Builder</title>
     <script data-main="app/config.js" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/icons.css" />
     <link rel="stylesheet" href="css/empire-builder.css" />
   </head>
   <body>
@@ -16,27 +17,21 @@
           </ul>
           <div class="resources">
             <div class="money">
-              <span class="money-icon">
-                M:
-              </span>
+              &#xe93b;
               {{ gameController.game.money | roundDown | number: 0}}
               <span class="income">
                 ({{ gameController.game.moneyPerSecond | number:1 }}/s)
               </span>
             </div>
             <div class="exporation">
-              <span class="exploration-icon">
-                E:
-              </span>
+              &#xe947;
               {{ gameController.game.exploration | roundDown | number: 0}}
               <span class="income">
                 ({{ gameController.game.explorationPerSecond | number:1 }}/s)
               </span>
             </div>
             <div class="score">
-              <span class="achievement-icon">
-                A:
-              </span>
+              &#xe99e;
               {{ gameController.game.achievementScore | number: 0 }}
             </div>
           </div>

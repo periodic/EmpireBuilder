@@ -1,11 +1,10 @@
-Build City
-
+<h2>Build City</h2>
 
 <div ng-if="buildCityController.hasSites()">
   <table class='city-site-list table'>
     <thead>
       <tr class="city-site-list-header">
-        <th class="distance">Distance</th>
+        <th class="distance">&#xe949;</th>
         <th class="modifiers">Modifiers</th>
         <th class="actions"></th>
       </tr>
@@ -15,14 +14,13 @@ Build City
         <td class="name">{{ citySite.distance | number:0 }}</td>
         <td class="modifiers">
           <span ng-repeat="modifier in citySite.getModifiers()">
-            {{ modifier.id }} ({{ modifier.strength * 100 | number:0 }})
-            <span ng-if="!$first">,</span>
+            {{ modifier.id }}({{ modifier.strength * 100 | number:0 }})<span ng-if="!$last">,</span>
           </span>
         </td>
         <td class="actions">
           <a class="btn btn-primary" ng-click="buildCityController.buildCity($index)"
             ng-class="buildCityController.canBuild() || 'disabled'">
-            Build City ({{ buildCityController.buildCost() }})</a>
+            Build City {{ buildCityController.buildCost() }}&#xe93b;</a>
         </td>
       </tr>
     </tbody>
@@ -32,7 +30,7 @@ Build City
 <div>
   <a class="btn btn-primary" ng-click="buildCityController.explore()"
     ng-class="buildCityController.canExplore() || 'disabled'">
-    Explore ({{ buildCityController.exploreCost() | roundUp }})
+    Explore {{ buildCityController.exploreCost() | roundUp }}&#xe947;
   </a>
 </div>
 

@@ -37,7 +37,7 @@ define([
     baseModifierChance: 0.5,
     baseModifierStrength: 0.10,
     baseExplorationCost: 100,
-    baseFoodRequirement: 100,
+    baseFoodRequirement: 100 / 1.3,
 
     growthFactors: {
       building: 1.2,

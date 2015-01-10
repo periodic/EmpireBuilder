@@ -467,6 +467,10 @@ define(['data/constants'], function (Constants) {
   City.prototype.addBuilding = function (buildingId) {
     var count = this.buildings[buildingId] || 0;
     this.buildings[buildingId] = count + 1;
+
+    if (this.totalWorking() < this.population) {
+      this.addWorker(buildingId);
+    }
   };
 
   City.prototype.numWorkers = function (buildingId) {

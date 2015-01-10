@@ -30,6 +30,11 @@ define(['angular'], function () {
   GameController.prototype.onSelectCity = function (event, cityId) {
     event.stopPropagation();
 
+    this.selectCity(cityId);
+  };
+
+  GameController.prototype.selectCity = function (cityId) {
+    console.log("Selecting city ", cityId);
     this.$state.go('cities.detail', {cityId: cityId});
   };
 
