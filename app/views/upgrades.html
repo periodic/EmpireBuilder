@@ -15,7 +15,8 @@
           <td class="name">{{ upgrade.name }}</td>
           <td class="description">{{ upgrade.description }}</td>
           <td class="actions">
-            <a class="btn btn-primary btn-buy" ng-click="upgradesController.purchase(upgrade.id)">
+            <a class="btn btn-primary btn-buy" ng-click="upgradesController.purchase(upgrade.id)"
+              ng-class="upgradesController.canPurchase(upgrade.id) || 'disabled'">
               Buy
               {{ upgradesController.game.upgradeCost(upgrade.id) | roundUp | number:0 }}<icon-score></icon-score>
             </a>

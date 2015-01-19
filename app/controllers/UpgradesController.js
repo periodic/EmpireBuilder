@@ -18,6 +18,10 @@ define(['angular'], function () {
     this.upgradesPurchased = this.game.upgradesPurchased();
   };
 
+  UpgradesController.prototype.canPurchase = function (upgradeId) {
+    return this.game.achievementScore >= this.game.upgradeCost(upgradeId);
+  };
+
   var m = angular.module('EB.Controllers.UpgradesController', []);
   m.controller('UpgradesController', UpgradesController);
 });

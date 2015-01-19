@@ -29,7 +29,7 @@ define(['data/constants'], function (Constants) {
     this.sites = [];
 
     this.money = Constants.initialMoney;
-    this.exploration = 0;
+    this.exploration = Constants.initialExploration;
     this.nextExplorationCost = Constants.baseExplorationCost;
     this.nextExplorationDistance = Constants.baseExplorationDistance;
 
@@ -239,7 +239,7 @@ define(['data/constants'], function (Constants) {
     return city.costMultiplier *
         trueCost(building.cost,
                  city.numBuildings(buildingId),
-                 Constants.growthFactors.building);
+                 Constants.growthFactors.buildingCost);
   };
 
   Game.prototype.buildingProfit = function (buildingId, cityId, count) {
@@ -490,7 +490,7 @@ define(['data/constants'], function (Constants) {
 
   City.prototype.foodRequired = function () {
     return trueCost(Constants.baseFoodRequirement, this.population,
-                    Constants.growthFactors.food);
+                    Constants.growthFactors.foodCost);
   };
 
   City.prototype.checkForGrowth = function () {
