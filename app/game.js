@@ -504,13 +504,11 @@ define(['data/constants'], function (Constants) {
     if (this.totalWorking() < this.population &&
         this.numWorkers(buildingId) < this.numBuildings(buildingId)) {
       this.workers[buildingId] = this.numWorkers(buildingId) + 1;
-      console.log("Adding worker to: ", buildingId, this);
     }
   };
 
   City.prototype.removeWorker = function (buildingId) {
     if (this.numWorkers(buildingId) > 0) {
-      console.log("Removing worker to: ", buildingId, this);
       this.workers[buildingId]--;
     }
   };

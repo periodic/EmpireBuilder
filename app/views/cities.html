@@ -16,7 +16,7 @@
       <tbody>
         <tr ng-repeat="city in gameController.game.cities" ng-click="gameController.selectCity($index)">
           <td class="name">
-            {{ city.name }}<span ng-if="city.isCapitol()"><icon-capitol></icon-capitol></span>
+            {{ city.name }}<span ng-if="city.isCapitol()"> <icon-capitol></icon-capitol></span>
           </td>
           <td class="population" simple-tooltip="{{ city.name }} city has {{ city.population | number:0 }} citizens.">{{ city.population | number:0 }}</td>
           <td class="buildings" simple-tooltip="{{ city.name }} city has {{ city.totalBuildings() | number:0 }} buildings.">{{ city.totalBuildings() | number:0 }}</td>
